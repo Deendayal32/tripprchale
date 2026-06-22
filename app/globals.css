@@ -1,26 +1,306 @@
 @import "tailwindcss";
 
+/* ── TripprChale Design System – Logo-matched Light Theme ── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand – extracted from logo */
+  --primary:       #FF8C42;   /* Logo orange  (TRIPP)      */
+  --primary-hover: #E07330;
+  --sky:           #29ABE2;   /* Logo sky blue (CHALE)     */
+  --sky-hover:     #1A8BBF;
+  --navy:          #1B2A4A;   /* Arc text, headings        */
+  --teal:          #2DBFBB;   /* Bear hat teal             */
+  --yellow:        #FFD15C;   /* Sun yellow – ratings      */
+  --red:           #E53E3E;
+
+  /* Backgrounds – light & airy */
+  --bg:            #F6F9FF;
+  --bg-card:       #FFFFFF;
+  --bg-blue:       #EEF5FF;
+  --bg-warm:       #FFF5EC;
+  --bg-teal:       #EAF9F9;
+  --bg-navy:       #1B2A4A;
+
+  /* Text */
+  --text:          #1B2A4A;
+  --text-muted:    #64748B;
+  --text-light:    #94A3B8;
+
+  /* Borders */
+  --border:        rgba(27,42,74,0.1);
+  --border-card:   rgba(27,42,74,0.07);
+
+  /* Shadows */
+  --shadow-sm:     0 2px 12px rgba(27,42,74,0.06);
+  --shadow-md:     0 4px 24px rgba(27,42,74,0.09);
+  --shadow-lg:     0 8px 40px rgba(27,42,74,0.13);
+  --shadow-orange: 0 4px 16px rgba(255,140,66,0.28);
+  --shadow-sky:    0 4px 16px rgba(41,171,226,0.28);
+
+  /* Legacy compat */
+  --cyan:          #29ABE2;
+  --dark:          #1B2A4A;
+  --forest:        #1B2A4A;
+  --background:    #F6F9FF;
+  --foreground:    #1B2A4A;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --font-sans: 'Poppins', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* safe area support for notch / home-bar devices */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Mobile: bump minimum tap-target size on interactive elements inside cards */
+@media (max-width: 640px) {
+  .btn-primary, .btn-sky, .btn-outline { min-height: 44px; }
+  .filter-tab, .month-tab { min-height: 40px; padding-top: 0.5rem; padding-bottom: 0.5rem; }
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.6rem;
+  background: linear-gradient(135deg, var(--primary) 0%, #E07330 100%);
+  color: #fff;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+  text-decoration: none;
+  letter-spacing: 0.015em;
+  box-shadow: var(--shadow-orange);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255,140,66,0.38);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-sky {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.6rem;
+  background: linear-gradient(135deg, var(--sky) 0%, var(--sky-hover) 100%);
+  color: #fff;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+  text-decoration: none;
+  box-shadow: var(--shadow-sky);
+}
+.btn-sky:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(41,171,226,0.38);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.6rem;
+  background: transparent;
+  color: var(--navy);
+  border: 2px solid var(--border);
+  border-radius: 9999px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+.btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(255,140,66,0.05);
+}
+
+/* ── Badges ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--bg-card);
+  border-radius: 1.25rem;
+  border: 1px solid var(--border-card);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── Trip Card ── */
+.trip-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.trip-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(27,42,74,0.14);
+}
+.trip-card .trip-img { transition: transform 0.4s ease; }
+.trip-card:hover .trip-img { transform: scale(1.07); }
+
+/* ── Duration badge overlay ── */
+.duration-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background: rgba(27,42,74,0.82);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.22rem 0.55rem;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(4px);
+}
+
+/* ── Batch dates ── */
+.batch-date {
+  color: var(--sky);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* ── Filter Tabs ── */
+.filter-tab {
+  padding: 0.45rem 1.15rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  transition: all 0.2s ease;
+  background: #fff;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.filter-tab.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px rgba(255,140,66,0.3);
+}
+.filter-tab:hover:not(.active) {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(255,140,66,0.05);
+}
+
+/* ── Month tabs ── */
+.month-tab {
+  padding: 0.35rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  transition: all 0.2s ease;
+  background: #fff;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.month-tab.active {
+  background: var(--sky);
+  color: #fff;
+  border-color: var(--sky);
+  box-shadow: 0 4px 14px rgba(41,171,226,0.3);
+}
+.month-tab:hover:not(.active) {
+  border-color: var(--sky);
+  color: var(--sky);
+}
+
+/* ── Navbar ── */
+.navbar-scrolled {
+  background: rgba(255,255,255,0.96) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  box-shadow: 0 2px 20px rgba(27,42,74,0.1) !important;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary-hover); }
+
+/* ── Animations ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+@keyframes pulse-ring {
+  0%    { transform: scale(0.9); opacity: 0.7; }
+  100%  { transform: scale(1.4); opacity: 0; }
+}
+@keyframes slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.animate-float       { animation: float 3.5s ease-in-out infinite; }
+.animate-slide-up    { animation: slide-up 0.5s ease forwards; }
+
+/* ── Gradient text utility ── */
+.text-gradient-orange {
+  background: linear-gradient(135deg, var(--primary) 0%, #FFB347 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gradient-sky {
+  background: linear-gradient(135deg, var(--sky) 0%, var(--teal) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

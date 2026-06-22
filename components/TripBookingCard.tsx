@@ -1,0 +1,149 @@
+'use client'
+
+import { useState } from 'react'
+import { Phone, Users } from 'lucide-react'
+import { Trip, Batch } from '@/lib/queries'
+
+function fmtDate(d: string) {
+  const [y, m, day] = d.split('-').map(Number)
+  return new Date(y, m - 1, day).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+}
+function fmtShort(d: string) {
+  const [y, m, day] = d.split('-').map(Number)
+  return new Date(y, m - 1, day).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
+}
+
+export default function TripBookingCard({ trip }: { trip: Trip }) {
+  const today    = new Date().toISOString().split('T')[0]
+  const upcoming = trip.batches.filter(b => b.departureDate >= today)
+
+  const [selectedBatch, setSelectedBatch] = useState<Batch | null>(upcoming[0] ?? trip.batches[0] ?? null)
+  const rawPct = ((trip.totalSeats - trip.seatsLeft) / trip.totalSeats) * 100
+  const pct = Number.isFinite(rawPct) ? Math.min(Math.max(rawPct, 0), 100) : 0
+
+  const waLink = `https://wa.me/919717096999?text=Hi%20TripprChale!%20I%20want%20to%20book%20${encodeURIComponent(trip.name)}${selectedBatch ? `%20departing%20${encodeURIComponent(fmtDate(selectedBatch.departureDate))}` : ''}`
+
+  return (
+    <>
+    {/* ── Mobile sticky bottom bar ── */}
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 flex items-center gap-3 px-4 py-3 bg-white border-t"
+      style={{ borderColor: 'rgba(0,0,0,0.1)', boxShadow: '0 -4px 20px rgba(27,42,74,0.08)', paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
+      <div className="shrink-0">
+        <div className="font-bold text-xl" style={{ color: 'var(--primary)' }}>
+          ₹{trip.price.toLocaleString('en-IN')}
+        </div>
+        <div className="text-xs text-gray-400 leading-none">per person</div>
+      </div>
+      <a href={waLink} target="_blank" rel="noopener noreferrer"
+        className="btn-primary flex-1 text-center text-sm"
+        style={{ padding: '0.7rem 1rem' }}>
+        🚀 Book Now
+      </a>
+      <a href={`https://wa.me/919717096999?text=Hi!%20I%20want%20to%20know%20more%20about%20${encodeURIComponent(trip.name)}`}
+        target="_blank" rel="noopener noreferrer"
+        className="shrink-0 w-11 h-11 rounded-full flex items-center justify-center text-white text-xl"
+        style={{ background: '#25D366' }}>
+        💬
+      </a>
+    </div>
+
+    {/* ── Desktop booking card ── */}
+    <div className="sticky top-24 rounded-3xl overflow-hidden shadow-xl" style={{ border: '1px solid rgba(0,0,0,0.07)' }}>
+
+      {/* Price header */}
+      <div className="p-6" style={{ background: 'var(--navy)' }}>
+        <div className="flex items-end gap-3 mb-1">
+          <div className="font-display font-bold text-3xl text-white">
+            ₹{trip.price.toLocaleString('en-IN')}
+          </div>
+          {trip.originalPrice && (
+            <div className="text-white/50 text-sm line-through pb-1">
+              ₹{trip.originalPrice.toLocaleString('en-IN')}
+            </div>
+          )}
+        </div>
+        <div className="text-white/60 text-xs">per person · all inclusive</div>
+        {trip.originalPrice && (
+          <div className="inline-block mt-2 text-xs font-bold px-2 py-0.5 rounded-full"
+            style={{ background: 'var(--yellow)', color: 'var(--navy)' }}>
+            Save ₹{(trip.originalPrice - trip.price).toLocaleString('en-IN')}!
+          </div>
+        )}
+      </div>
+
+      <div className="p-5 bg-white space-y-4">
+
+        {/* Seat fill bar */}
+        <div>
+          <div className="flex justify-between text-xs mb-1.5">
+            <span className="flex items-center gap-1 text-gray-400">
+              <Users size={12} /> {trip.totalSeats - trip.seatsLeft} booked
+            </span>
+            <span style={{ color: trip.seatsLeft <= 5 ? '#e53e3e' : 'var(--navy)', fontWeight: 600, fontSize: '0.75rem' }}>
+              {trip.seatsLeft} seats left
+            </span>
+          </div>
+          <div className="h-2 rounded-full" style={{ background: '#f0f0f0' }}>
+            <div className="h-full rounded-full transition-all"
+              style={{ width: `${pct}%`, background: pct > 80 ? '#e53e3e' : 'var(--primary)' }} />
+          </div>
+        </div>
+
+        {/* Selected batch pill */}
+        {selectedBatch && (
+          <div className="rounded-xl p-3 text-sm"
+            style={{ background: 'rgba(0,194,255,0.06)', border: '1px solid rgba(0,194,255,0.2)' }}>
+            <p className="text-xs text-gray-400 mb-0.5">Selected Departure</p>
+            <p className="font-bold" style={{ color: 'var(--cyan)' }}>{fmtDate(selectedBatch.departureDate)}</p>
+            <p className="text-xs font-medium"
+              style={{ color: selectedBatch.status === 'Last Few Seats' ? '#e53e3e' : selectedBatch.status === 'Filling Fast' ? '#e65100' : '#2e7d32' }}>
+              {selectedBatch.status} · {selectedBatch.seatsLeft} seats left
+            </p>
+          </div>
+        )}
+
+        {/* Date picker pills */}
+        {upcoming.length > 0 && (
+          <div>
+            <p className="text-xs text-gray-400 mb-2">Pick a departure:</p>
+            <div className="flex flex-wrap gap-1.5">
+              {upcoming.slice(0, 4).map(b => (
+                <button key={b.batchId} onClick={() => setSelectedBatch(b)}
+                  className="text-xs font-semibold px-2.5 py-1 rounded-full transition-all"
+                  style={{
+                    background: selectedBatch?.batchId === b.batchId ? 'var(--cyan)' : 'rgba(0,194,255,0.1)',
+                    color:      selectedBatch?.batchId === b.batchId ? 'white'       : 'var(--cyan)',
+                    border: '1px solid rgba(0,194,255,0.3)',
+                  }}>
+                  {fmtShort(b.departureDate)}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Book Now */}
+        <a href={waLink} target="_blank" rel="noopener noreferrer"
+          className="btn-primary w-full text-center block text-sm" style={{ padding: '0.85rem' }}>
+          🚀 Book Now
+        </a>
+
+        {/* WhatsApp enquiry */}
+        <a href={`https://wa.me/919717096999?text=Hi!%20I%20want%20to%20know%20more%20about%20${encodeURIComponent(trip.name)}`}
+          target="_blank" rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 w-full text-sm font-semibold py-3 rounded-full transition-all hover:bg-green-50"
+          style={{ border: '2px solid #25D366', color: '#25D366' }}>
+          💬 Ask on WhatsApp
+        </a>
+
+        {/* Call */}
+        <a href="tel:+919589413700"
+          className="flex items-center justify-center gap-2 w-full text-sm font-medium py-2.5 rounded-full transition-all hover:bg-gray-50 text-gray-500"
+          style={{ border: '1.5px solid #e5e7eb' }}>
+          <Phone size={14} /> +91 958 941 3700
+        </a>
+      </div>
+    </div>
+    </>
+  )
+}
