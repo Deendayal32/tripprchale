@@ -15,7 +15,7 @@ export default async function AdminDashboard({ searchParams }: PageProps) {
   const category = sp.category || 'all'
 
   // Build query
-  let q = 'SELECT id, name, destination, category, price, seatsLeft, totalSeats, badge, badgeColor, emoji, duration FROM trips WHERE 1=1'
+  let q = 'SELECT id, slug, name, destination, category, price, seatsLeft, totalSeats, badge, badgeColor, emoji, duration FROM trips WHERE 1=1'
   const params: (string | number)[] = []
 
   if (category !== 'all') { q += ' AND category = ?'; params.push(category) }
@@ -201,6 +201,7 @@ export default async function AdminDashboard({ searchParams }: PageProps) {
           trips.map(trip => (
             <AdminTripRow key={trip.id} trip={{
               id:          trip.id,
+              slug:        trip.slug ?? '',
               name:        trip.name,
               destination: trip.destination,
               category:    trip.category,

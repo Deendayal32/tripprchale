@@ -3,7 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
-import { Search, LogOut, Plus, List, Home, X, Tag, MessageSquare, Menu } from 'lucide-react'
+import { Search, LogOut, Plus, List, Home, X, Tag, MessageSquare, Menu, Database } from 'lucide-react'
 
 type SearchResult = { id: number; name: string; destination: string; emoji: string; price: number; category: string }
 
@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { href: '/admin/create',     icon: <Plus size={14} />,          label: 'New Trip' },
   { href: '/admin/categories', icon: <Tag size={14} />,           label: 'Categories' },
   { href: '/admin/contacts',   icon: <MessageSquare size={14} />, label: 'Contacts' },
+  { href: '/admin/database',   icon: <Database size={14} />,      label: 'Database' },
   { href: '/',                 icon: <Home size={14} />,          label: 'View Site' },
 ]
 

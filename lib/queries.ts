@@ -8,8 +8,15 @@ export type Batch = {
   status: 'Available' | 'Filling Fast' | 'Last Few Seats'
 }
 
+export type ItineraryDay = {
+  day: number
+  title: string
+  description: string
+}
+
 export type Trip = {
   id: number
+  slug: string
   name: string
   destination: string
   category: string
@@ -24,8 +31,17 @@ export type Trip = {
   difficulty: string
   duration: string
   durationBadge: string
+  tagline: string
   highlights: string[]
   includes: string[]
+  exclusions: string[]
+  quadPrice?: number
+  triplePrice?: number
+  doublePrice?: number
+  advanceAmount: number
+  itinerary: ItineraryDay[]
+  cancellationPolicy: string
+  tripTerms: string
   batches: Batch[]
 }
 
@@ -33,6 +49,7 @@ export type Trip = {
 function mapRow(t: RowDataPacket, batches: RowDataPacket[]): Trip {
   return {
     id:            t.id,
+    slug:          t.slug ?? '',
     name:          t.name,
     destination:   t.destination,
     category:      t.category,
@@ -47,8 +64,17 @@ function mapRow(t: RowDataPacket, batches: RowDataPacket[]): Trip {
     difficulty:    t.difficulty ?? 'Easy',
     duration:      t.duration ?? '',
     durationBadge: t.duration ?? '',
+    tagline:       t.tagline ?? '',
     highlights:    typeof t.highlights === 'string' ? JSON.parse(t.highlights) : (t.highlights ?? []),
     includes:      typeof t.includes   === 'string' ? JSON.parse(t.includes)   : (t.includes   ?? []),
+    exclusions:    typeof t.exclusions === 'string' ? JSON.parse(t.exclusions) : (t.exclusions ?? []),
+    quadPrice:     t.quad_price   ?? undefined,
+    triplePrice:   t.triple_price ?? undefined,
+    doublePrice:   t.double_price ?? undefined,
+    advanceAmount: t.advance_amount ?? 2000,
+    itinerary:     typeof t.itinerary === 'string' ? JSON.parse(t.itinerary) : (t.itinerary ?? []),
+    cancellationPolicy: t.cancellation_policy ?? '',
+    tripTerms:          t.trip_terms ?? '',
     batches: batches
       .filter(b => b.trip_id === t.id)
       .map(b => ({

@@ -7,6 +7,7 @@ import { Edit2, Trash2, ExternalLink } from 'lucide-react'
 
 type Trip = {
   id: number
+  slug: string
   name: string
   destination: string
   category: string
@@ -87,12 +88,12 @@ export default function AdminTripRow({ trip }: { trip: Trip }) {
 
       {/* Actions */}
       <div className="flex items-center gap-1.5">
-        <Link href={`/trips/${trip.id}`} target="_blank"
+        <Link href={`/trips/${trip.id}/${trip.slug}`} target="_blank"
           className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-blue-500 hover:bg-blue-50 transition-all"
           title="View on site">
           <ExternalLink size={14} />
         </Link>
-        <Link href={`/trips/${trip.id}`} target="_blank"
+        <Link href={`/trips/${trip.id}/${trip.slug}`} target="_blank"
           className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-orange-500 hover:bg-orange-50 transition-all"
           title="Edit (view on site)">
           <Edit2 size={14} />

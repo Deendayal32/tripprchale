@@ -9,7 +9,9 @@ export async function POST(req: NextRequest) {
       name, destination, category, price, originalPrice,
       totalSeats, seatsLeft, image, emoji, badge, badgeColor,
       difficulty, duration, tagline,
-      highlights, includes,
+      highlights, includes, exclusions,
+      quad_price, triple_price, double_price, advance_amount,
+      itinerary, cancellation_policy, trip_terms,
       batches = [],
     } = body
 
@@ -47,8 +49,16 @@ export async function POST(req: NextRequest) {
       difficulty:    difficulty    ?? 'Easy',
       duration,
       tagline:       tagline       ?? '',
-      highlights:    highlights    ?? '[]',
-      includes:      includes      ?? '[]',
+      highlights:          highlights          ?? '[]',
+      includes:            includes            ?? '[]',
+      exclusions:          exclusions          ?? '[]',
+      quad_price:          quad_price          ?? null,
+      triple_price:        triple_price        ?? null,
+      double_price:        double_price        ?? null,
+      advance_amount:      advance_amount      ?? 2000,
+      itinerary:           itinerary           ?? '[]',
+      cancellation_policy: cancellation_policy ?? '',
+      trip_terms:          trip_terms          ?? '',
     }
 
     // Auto-add any required column we don't explicitly know about

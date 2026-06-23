@@ -13,6 +13,7 @@ const pool =
     user:     process.env.DB_USER     ?? 'root',
     password: process.env.DB_PASSWORD ?? '',
     database: process.env.DB_NAME     ?? 'tripprchalo',
+    charset:  'utf8mb4_unicode_ci',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,

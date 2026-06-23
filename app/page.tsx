@@ -311,7 +311,7 @@ function TripCard({ trip }: { trip: Trip }) {
   const next3 = (trip.batches ?? []).filter(b => b.departureDate >= today).slice(0, 3)
 
   return (
-    <Link href={`/trips/${trip.id}`} className="block group">
+    <Link href={`/trips/${trip.id}/${trip.slug}`} className="block group">
       <div className="trip-card bg-white rounded-2xl overflow-hidden h-full"
         style={{ border: '1px solid var(--border-card)', boxShadow: 'var(--shadow-sm)' }}>
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Phone, Users } from 'lucide-react'
+import { Phone, Users, Share2 } from 'lucide-react'
 import { Trip, Batch } from '@/lib/queries'
 
 function fmtDate(d: string) {
@@ -13,15 +13,39 @@ function fmtShort(d: string) {
   return new Date(y, m - 1, day).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
 }
 
+type SharingType = 'quad' | 'triple' | 'double' | 'standard'
+
 export default function TripBookingCard({ trip }: { trip: Trip }) {
   const today    = new Date().toISOString().split('T')[0]
   const upcoming = trip.batches.filter(b => b.departureDate >= today)
 
-  const [selectedBatch, setSelectedBatch] = useState<Batch | null>(upcoming[0] ?? trip.batches[0] ?? null)
-  const rawPct = ((trip.totalSeats - trip.seatsLeft) / trip.totalSeats) * 100
-  const pct = Number.isFinite(rawPct) ? Math.min(Math.max(rawPct, 0), 100) : 0
+  const [selectedBatch,   setSelectedBatch]   = useState<Batch | null>(upcoming[0] ?? trip.batches[0] ?? null)
+  const [sharingType,     setSharingType]      = useState<SharingType>('standard')
 
-  const waLink = `https://wa.me/919717096999?text=Hi%20TripprChale!%20I%20want%20to%20book%20${encodeURIComponent(trip.name)}${selectedBatch ? `%20departing%20${encodeURIComponent(fmtDate(selectedBatch.departureDate))}` : ''}`
+  const rawPct = ((trip.totalSeats - trip.seatsLeft) / trip.totalSeats) * 100
+  const pct    = Number.isFinite(rawPct) ? Math.min(Math.max(rawPct, 0), 100) : 0
+
+  // Sharing-based pricing
+  const allSharingOptions: { key: SharingType; label: string; price?: number }[] = [
+    { key: 'quad',   label: 'Quad',   price: trip.quadPrice },
+    { key: 'triple', label: 'Triple', price: trip.triplePrice },
+    { key: 'double', label: 'Double', price: trip.doublePrice },
+  ]
+  const sharingOptions = allSharingOptions.filter(o => o.price != null)
+
+  const hasSharing = sharingOptions.length > 0
+
+  const displayPrice = hasSharing
+    ? (sharingOptions.find(o => o.key === sharingType)?.price ?? trip.price)
+    : trip.price
+
+  const waBookLink = `https://wa.me/919717096999?text=Hi%20TripprChale!%20I%20want%20to%20book%20${encodeURIComponent(trip.name)}${selectedBatch ? `%20departing%20${encodeURIComponent(fmtDate(selectedBatch.departureDate))}` : ''}${hasSharing && sharingType !== 'standard' ? `%20(${sharingType}%20sharing)` : ''}.%20Please%20share%20payment%20details.`
+
+  function handleShare() {
+    const url  = typeof window !== 'undefined' ? window.location.href : ''
+    const text = `Check out this trip: ${trip.emoji} ${trip.name} – Starting ₹${trip.price.toLocaleString('en-IN')}/person\n${url}`
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer')
+  }
 
   return (
     <>
@@ -30,21 +54,21 @@ export default function TripBookingCard({ trip }: { trip: Trip }) {
       style={{ borderColor: 'rgba(0,0,0,0.1)', boxShadow: '0 -4px 20px rgba(27,42,74,0.08)', paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
       <div className="shrink-0">
         <div className="font-bold text-xl" style={{ color: 'var(--primary)' }}>
-          ₹{trip.price.toLocaleString('en-IN')}
+          ₹{displayPrice.toLocaleString('en-IN')}
         </div>
         <div className="text-xs text-gray-400 leading-none">per person</div>
       </div>
-      <a href={waLink} target="_blank" rel="noopener noreferrer"
+      <a href={waBookLink} target="_blank" rel="noopener noreferrer"
         className="btn-primary flex-1 text-center text-sm"
         style={{ padding: '0.7rem 1rem' }}>
         🚀 Book Now
       </a>
-      <a href={`https://wa.me/919717096999?text=Hi!%20I%20want%20to%20know%20more%20about%20${encodeURIComponent(trip.name)}`}
-        target="_blank" rel="noopener noreferrer"
-        className="shrink-0 w-11 h-11 rounded-full flex items-center justify-center text-white text-xl"
-        style={{ background: '#25D366' }}>
-        💬
-      </a>
+      <button onClick={handleShare}
+        className="shrink-0 w-11 h-11 rounded-full flex items-center justify-center text-white"
+        style={{ background: '#25D366' }}
+        aria-label="Share on WhatsApp">
+        <Share2 size={16} />
+      </button>
     </div>
 
     {/* ── Desktop booking card ── */}
@@ -53,8 +77,8 @@ export default function TripBookingCard({ trip }: { trip: Trip }) {
       {/* Price header */}
       <div className="p-6" style={{ background: 'var(--navy)' }}>
         <div className="flex items-end gap-3 mb-1">
-          <div className="font-display font-bold text-3xl text-white">
-            ₹{trip.price.toLocaleString('en-IN')}
+          <div className="font-bold text-3xl text-white">
+            ₹{displayPrice.toLocaleString('en-IN')}
           </div>
           {trip.originalPrice && (
             <div className="text-white/50 text-sm line-through pb-1">
@@ -66,12 +90,48 @@ export default function TripBookingCard({ trip }: { trip: Trip }) {
         {trip.originalPrice && (
           <div className="inline-block mt-2 text-xs font-bold px-2 py-0.5 rounded-full"
             style={{ background: 'var(--yellow)', color: 'var(--navy)' }}>
-            Save ₹{(trip.originalPrice - trip.price).toLocaleString('en-IN')}!
+            Save ₹{(trip.originalPrice - displayPrice).toLocaleString('en-IN')}!
           </div>
         )}
       </div>
 
       <div className="p-5 bg-white space-y-4">
+
+        {/* Sharing type selector */}
+        {hasSharing && (
+          <div>
+            <p className="text-xs text-gray-400 mb-2">Room Sharing Preference:</p>
+            <div className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${sharingOptions.length}, 1fr)` }}>
+              {sharingOptions.map(opt => (
+                <button
+                  key={opt.key}
+                  onClick={() => setSharingType(opt.key)}
+                  className="text-xs font-semibold px-2 py-2 rounded-xl transition-all text-center"
+                  style={{
+                    background: sharingType === opt.key ? 'var(--primary)' : 'rgba(255,145,77,0.08)',
+                    color:      sharingType === opt.key ? 'white'          : 'var(--primary)',
+                    border:     `1.5px solid ${sharingType === opt.key ? 'var(--primary)' : 'rgba(255,145,77,0.25)'}`,
+                  }}
+                >
+                  <div>{opt.label}</div>
+                  <div className="font-bold mt-0.5">₹{opt.price!.toLocaleString('en-IN')}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Advance badge */}
+        <div className="rounded-xl py-2.5 px-3 flex items-center gap-2"
+          style={{ background: 'rgba(255,145,77,0.08)', border: '1.5px dashed rgba(255,145,77,0.4)' }}>
+          <span className="text-base">💳</span>
+          <div>
+            <span className="text-xs text-gray-500">Book now by paying just </span>
+            <span className="text-sm font-bold" style={{ color: 'var(--primary)' }}>
+              ₹{trip.advanceAmount.toLocaleString('en-IN')} advance
+            </span>
+          </div>
+        </div>
 
         {/* Seat fill bar */}
         <div>
@@ -122,11 +182,20 @@ export default function TripBookingCard({ trip }: { trip: Trip }) {
           </div>
         )}
 
-        {/* Book Now */}
-        <a href={waLink} target="_blank" rel="noopener noreferrer"
-          className="btn-primary w-full text-center block text-sm" style={{ padding: '0.85rem' }}>
-          🚀 Book Now
-        </a>
+        {/* Book Now + Share */}
+        <div className="flex gap-2">
+          <a href={waBookLink} target="_blank" rel="noopener noreferrer"
+            className="btn-primary flex-1 text-center block text-sm" style={{ padding: '0.85rem' }}>
+            🚀 Book Now
+          </a>
+          <button
+            onClick={handleShare}
+            className="flex items-center justify-center gap-1.5 px-4 rounded-full font-semibold text-sm transition-all hover:opacity-80"
+            style={{ background: '#25D366', color: 'white' }}
+            aria-label="Share on WhatsApp">
+            <Share2 size={15} />
+          </button>
+        </div>
 
         {/* WhatsApp enquiry */}
         <a href={`https://wa.me/919717096999?text=Hi!%20I%20want%20to%20know%20more%20about%20${encodeURIComponent(trip.name)}`}
