@@ -176,7 +176,7 @@ export default function TripTabs({ trip, today }: { trip: Trip; today: string })
       {tab === 'inclusions' && (
         <div className="rounded-2xl p-6" style={CARD}>
           <h2 className="font-bold text-xl mb-5" style={{ color: 'var(--navy)' }}>✅ What&apos;s Included &amp; Excluded</h2>
-          {trip.includes.length === 0 && trip.exclusions.length === 0 ? (
+          {trip.includes.length === 0 && trip.excludes.length === 0 ? (
             <p className="text-sm text-gray-400 text-center py-6">Inclusion details coming soon. Contact us for more info.</p>
           ) : (
             <div className="grid sm:grid-cols-2 gap-6">
@@ -195,11 +195,11 @@ export default function TripTabs({ trip, today }: { trip: Trip; today: string })
                 </div>
               )}
               {/* Exclusions */}
-              {trip.exclusions.length > 0 && (
+              {trip.excludes.length > 0 && (
                 <div>
                   <h3 className="text-sm font-bold mb-3" style={{ color: '#dc2626' }}>Not Included</h3>
                   <div className="space-y-2.5">
-                    {trip.exclusions.map((exc, i) => (
+                    {trip.excludes.map((exc, i) => (
                       <div key={i} className="flex items-start gap-2.5">
                         <XCircle size={16} className="shrink-0 mt-0.5" style={{ color: '#ef4444' }} />
                         <span className="text-sm text-gray-700">{exc}</span>
@@ -235,11 +235,11 @@ export default function TripTabs({ trip, today }: { trip: Trip; today: string })
               <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{trip.tripTerms}</p>
             ) : (
               <div className="space-y-2 text-sm text-gray-600">
-                <p>• All travellers must carry a valid government-issued photo ID.</p>
+                <p>• All travelers must carry a valid government-issued photo ID.</p>
                 <p>• The trip captain&apos;s decision is final in all matters on the trip.</p>
                 <p>• TripprChale reserves the right to modify itineraries due to weather or safety concerns.</p>
-                <p>• Travellers with medical conditions must inform us before booking.</p>
-                <p>• Behaviour endangering fellow travellers may result in removal without refund.</p>
+                <p>• Travelers with medical conditions must inform us before booking.</p>
+                <p>• Behaviour endangering fellow travelers may result in removal without refund.</p>
               </div>
             )}
           </div>

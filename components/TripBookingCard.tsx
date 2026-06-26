@@ -206,11 +206,18 @@ export default function TripBookingCard({ trip }: { trip: Trip }) {
         </a>
 
         {/* Call */}
-        <a href="tel:+919589413700"
-          className="flex items-center justify-center gap-2 w-full text-sm font-medium py-2.5 rounded-full transition-all hover:bg-gray-50 text-gray-500"
-          style={{ border: '1.5px solid #e5e7eb' }}>
-          <Phone size={14} /> +91 958 941 3700
-        </a>
+        <div className="flex gap-2">
+          <a href="tel:+918448622890"
+            className="flex-1 flex items-center justify-center gap-1.5 text-xs font-medium py-2.5 rounded-full transition-all hover:bg-gray-50 text-gray-500"
+            style={{ border: '1.5px solid #e5e7eb' }}>
+            <Phone size={13} /> 84486 22890
+          </a>
+          <a href="tel:+919136090840"
+            className="flex-1 flex items-center justify-center gap-1.5 text-xs font-medium py-2.5 rounded-full transition-all hover:bg-gray-50 text-gray-500"
+            style={{ border: '1.5px solid #e5e7eb' }}>
+            <Phone size={13} /> 91360 90840
+          </a>
+        </div>
       </div>
     </div>
     </>

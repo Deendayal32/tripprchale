@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { Search, LogOut, Plus, List, Home, X, Tag, MessageSquare, Menu, Database } from 'lucide-react'
 
-type SearchResult = { id: number; name: string; destination: string; emoji: string; price: number; category: string }
+type SearchResult = { id: number; slug: string; name: string; destination: string; emoji: string; price: number; category: string }
 
 const NAV_ITEMS = [
   { href: '/admin',            icon: <List size={14} />,          label: 'Trips' },
@@ -111,7 +111,7 @@ export default function AdminNavbar() {
               style={{ background: '#1a2d4a', border: '1px solid rgba(255,255,255,0.1)' }}>
               {results.map(t => (
                 <button key={t.id}
-                  onMouseDown={() => router.push(`/trips/${t.id}`)}
+                  onMouseDown={() => router.push(`/trips/${t.id}/${t.slug || t.id}`)}
                   className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-white/10 transition-colors text-left border-b last:border-0"
                   style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
                   <div className="flex items-center gap-2">

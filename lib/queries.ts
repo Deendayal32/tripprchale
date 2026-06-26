@@ -34,7 +34,7 @@ export type Trip = {
   tagline: string
   highlights: string[]
   includes: string[]
-  exclusions: string[]
+  excludes: string[]
   quadPrice?: number
   triplePrice?: number
   doublePrice?: number
@@ -57,7 +57,7 @@ function mapRow(t: RowDataPacket, batches: RowDataPacket[]): Trip {
     originalPrice: t.originalPrice ?? undefined,
     totalSeats:    t.totalSeats,
     seatsLeft:     t.seatsLeft,
-    image:         t.image ?? '',
+    image:         t.image || '',
     emoji:         t.emoji ?? '✈️',
     badge:         t.badge ?? '',
     badgeColor:    t.badgeColor ?? '#FF914D',
@@ -67,7 +67,7 @@ function mapRow(t: RowDataPacket, batches: RowDataPacket[]): Trip {
     tagline:       t.tagline ?? '',
     highlights:    typeof t.highlights === 'string' ? JSON.parse(t.highlights) : (t.highlights ?? []),
     includes:      typeof t.includes   === 'string' ? JSON.parse(t.includes)   : (t.includes   ?? []),
-    exclusions:    typeof t.exclusions === 'string' ? JSON.parse(t.exclusions) : (t.exclusions ?? []),
+    excludes:      typeof t.excludes === 'string' ? JSON.parse(t.excludes) : (t.excludes ?? []),
     quadPrice:     t.quad_price   ?? undefined,
     triplePrice:   t.triple_price ?? undefined,
     doublePrice:   t.double_price ?? undefined,

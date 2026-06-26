@@ -8,7 +8,7 @@ import Footer from '@/components/Footer'
 import HeroSearch from '@/components/HeroSearch'
 import TripFilters from '@/components/TripFilters'
 import { getTrips, Trip } from '@/lib/queries'
-import { MapPin, Clock, Users, ChevronRight, Star, Shield, HeadphonesIcon, IndianRupee, Mountain } from 'lucide-react'
+import { MapPin, Clock, Users, ChevronRight, Star } from 'lucide-react'
 import ContactPopup from '@/components/ContactPopup'
 
 type PageProps = {
@@ -102,7 +102,7 @@ export default async function HomePage({ searchParams }: PageProps) {
         <div className="relative z-10 grid grid-cols-4 gap-4 sm:gap-10 mt-10 sm:mt-12 w-full max-w-sm sm:max-w-none sm:w-auto">
           {[
             { value: `${trips.length || '10'}+`, label: 'Active Trips' },
-            { value: '500+',  label: 'Travellers' },
+            { value: '500+',  label: 'Travelers' },
             { value: '15+',   label: 'Destinations' },
             { value: '4.9★',  label: 'Rating' },
           ].map(({ value, label }) => (
@@ -166,54 +166,54 @@ export default async function HomePage({ searchParams }: PageProps) {
               style={{ background: 'rgba(255,140,66,0.1)', color: 'var(--primary)', border: '1px solid rgba(255,140,66,0.2)' }}>
               💎 The TripprChale Advantage
             </div>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl" style={{ color: 'var(--navy)' }}>
-              Why Travel With Us?
+            <h2 className="font-display font-bold text-3xl sm:text-4xl">
+              <span style={{ color: '#FF914D' }}>Why Trippr</span><span style={{ color: '#1B2A4A' }}>chale?</span>
             </h2>
-            <p className="mt-2 text-sm" style={{ color: 'var(--text-muted)' }}>
-              Everything you need for a hassle-free, unforgettable trip
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {[
               {
-                icon: <Mountain size={24} />,
-                iconBg: 'rgba(41,171,226,0.12)',
-                iconColor: 'var(--sky)',
-                title: 'Expert Trip Captains',
-                desc: 'Experienced leaders on every single trip',
+                title: 'Your Safety is Our Topmost Priority',
+                desc: 'Verified trip captains, 24/7 SOS coordination, and zero-compromise security on solo female-friendly group tours.',
               },
               {
-                icon: <IndianRupee size={24} />,
-                iconBg: 'rgba(255,140,66,0.12)',
-                iconColor: 'var(--primary)',
-                title: 'Best Price Guarantee',
-                desc: 'Amazing trips starting from just ₹5,499',
+                title: '24/7 Dedicated On-Trip Support',
+                desc: 'An active centralized backend customer happiness team responding to queries in under 5 minutes.',
               },
               {
-                icon: <Shield size={24} />,
-                iconBg: 'rgba(45,191,187,0.12)',
-                iconColor: 'var(--teal)',
-                title: 'Safe & Verified',
-                desc: '500+ happy travellers, zero incidents',
+                title: '100% Secure & Flexible Payment Options',
+                desc: 'Book your seat by paying an advance token amount via encrypted Razorpay/UPI loop channels.',
               },
               {
-                icon: <HeadphonesIcon size={24} />,
-                iconBg: 'rgba(27,42,74,0.08)',
-                iconColor: 'var(--navy)',
-                title: '24/7 WhatsApp Support',
-                desc: 'We are with you throughout your journey',
+                title: 'Premium, Comfortable & Sanitized Vehicles',
+                desc: 'Spacious Force Travelers and luxury AC Volvos driven by mountain-certified commercial experts.',
               },
-            ].map(({ icon, iconBg, iconColor, title, desc }) => (
+              {
+                title: 'Energetic & Certified Trip Captains',
+                desc: 'Not just boring guides—our captains are high-energy storytellers who turn strangers into a travel family.',
+              },
+              {
+                title: 'Like-Minded Youth Communities Only',
+                desc: 'Strictly curated age groups (18-35) ensuring premium networking, campfire jams, and high-vibe dosto-wala atmosphere.',
+              },
+              {
+                title: 'Handpicked & Highly Hygienic Stays',
+                desc: 'Tested boutique hostels, premium camps, and cozy stays with great vibes and comfortable facilities.',
+              },
+              {
+                title: 'Government-Mandated Compliances',
+                desc: 'Full alignment with local transport, state tourism laws, and premium local networks.',
+              },
+            ].map(({ title, desc }) => (
               <div key={title}
-                className="rounded-2xl p-6 bg-white transition-all duration-300 hover:-translate-y-1"
+                className="flex gap-4 rounded-2xl p-5 bg-white transition-all duration-300 hover:-translate-y-0.5"
                 style={{ border: '1px solid var(--border-card)', boxShadow: 'var(--shadow-sm)' }}>
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                  style={{ background: iconBg, color: iconColor }}>
-                  {icon}
+                <span className="text-xl font-bold shrink-0 mt-0.5" style={{ color: '#FF914D' }}>✓</span>
+                <div>
+                  <div className="font-semibold text-sm mb-1" style={{ color: 'var(--navy)' }}>{title}</div>
+                  <div className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>{desc}</div>
                 </div>
-                <div className="font-semibold text-sm mb-1.5" style={{ color: 'var(--navy)' }}>{title}</div>
-                <div className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>{desc}</div>
               </div>
             ))}
           </div>
@@ -226,10 +226,10 @@ export default async function HomePage({ searchParams }: PageProps) {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-3"
               style={{ background: 'rgba(255,213,92,0.2)', color: '#B8860B', border: '1px solid rgba(255,213,92,0.4)' }}>
-              ⭐ Real Travellers, Real Stories
+              ⭐ Real Travelers, Real Stories
             </div>
             <h2 className="font-display font-bold text-3xl sm:text-4xl" style={{ color: 'var(--navy)' }}>
-              What Our Travellers Say
+              What Our Travelers Say
             </h2>
           </div>
 
@@ -288,10 +288,10 @@ export default async function HomePage({ searchParams }: PageProps) {
               style={{ color: '#16a34a' }}>
               💬 WhatsApp Us
             </a>
-            <a href="tel:+919589413700"
+            <a href="tel:+918448622890"
               className="flex items-center gap-2.5 text-white font-semibold text-sm px-7 py-3.5 rounded-full transition-all hover:bg-white/15 w-full sm:w-auto justify-center"
               style={{ border: '2px solid rgba(255,255,255,0.55)' }}>
-              📞 +91 958 941 3700
+              📞 +91 84486 22890
             </a>
           </div>
         </div>
@@ -317,8 +317,15 @@ function TripCard({ trip }: { trip: Trip }) {
 
         {/* Image */}
         <div className="relative h-52 overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={trip.image} alt={trip.name} className="trip-img w-full h-full object-cover" />
+          {trip.image ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src={trip.image} alt={trip.name} className="trip-img w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-6xl"
+              style={{ background: 'linear-gradient(135deg, var(--navy) 0%, #0f3460 100%)' }}>
+              {trip.emoji}
+            </div>
+          )}
           <div className="absolute inset-0"
             style={{ background: 'linear-gradient(to top, rgba(27,42,74,0.6) 0%, transparent 55%)' }} />
           <div className="duration-badge">{trip.durationBadge}</div>

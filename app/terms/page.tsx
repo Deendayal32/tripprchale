@@ -26,11 +26,11 @@ const sections = [
   },
   {
     title: '5. Traveller Responsibilities',
-    body: 'Travellers are responsible for carrying valid government-issued photo ID, obtaining any required permits or visas, ensuring their personal fitness for the trip\'s difficulty level, and behaving respectfully towards fellow travellers, guides, and local communities. TripprChale may remove any traveller whose behaviour endangers others, without refund.',
+    body: 'Travelers are responsible for carrying valid government-issued photo ID, obtaining any required permits or visas, ensuring their personal fitness for the trip\'s difficulty level, and behaving respectfully towards fellow travelers, guides, and local communities. TripprChale may remove any traveller whose behaviour endangers others, without refund.',
   },
   {
     title: '6. Health & Safety',
-    body: 'Travellers with pre-existing medical conditions must disclose them at the time of booking. Participating in adventure activities (trekking, rafting, etc.) involves inherent risk. TripprChale is not liable for injuries arising from voluntary participation in such activities. We strongly recommend purchasing travel insurance.',
+    body: 'Travelers with pre-existing medical conditions must disclose them at the time of booking. Participating in adventure activities (trekking, rafting, etc.) involves inherent risk. TripprChale is not liable for injuries arising from voluntary participation in such activities. We strongly recommend purchasing travel insurance.',
   },
   {
     title: '7. Liability Limitation',
@@ -46,7 +46,7 @@ const sections = [
   },
   {
     title: '10. Contact',
-    body: 'For any questions about these Terms, please contact us at hello@tripprchale.com or call +91 958 941 3700.',
+    body: 'For any questions about these Terms, please contact us at tripprchaleofficial@gmail.com or call +91 84486 22890 / +91 91360 90840.',
   },
 ]
 
@@ -70,7 +70,7 @@ export default function TermsPage() {
         <div className="max-w-3xl mx-auto px-4 py-12 sm:py-16">
           <p className="text-sm mb-10" style={{ color: 'var(--text-muted)' }}>
             Please read these Terms &amp; Conditions carefully before booking a trip with TripprChale.
-            These terms apply to all travellers and bookings made through our website or any other channel.
+            These terms apply to all travelers and bookings made through our website or any other channel.
           </p>
 
           <div className="space-y-8">

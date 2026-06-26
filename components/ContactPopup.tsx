@@ -56,9 +56,8 @@ export default function ContactPopup() {
     return (
       <button
         onClick={() => setVisible(true)}
-        className="fixed z-40 flex items-center gap-2 text-sm font-semibold text-white px-4 py-3 rounded-full shadow-lg transition-all hover:scale-105"
+        className="fixed z-40 flex items-center gap-2 text-sm font-semibold text-white px-4 py-3 rounded-full shadow-lg transition-all hover:scale-105 bottom-36 lg:bottom-[5.5rem] right-6"
         style={{
-          bottom: '5.5rem', right: '1.5rem',
           background: 'linear-gradient(135deg, var(--primary), #E07330)',
           boxShadow: '0 4px 20px rgba(255,140,66,0.4)',
         }}
@@ -73,7 +72,7 @@ export default function ContactPopup() {
     <div
       className="fixed z-40 rounded-2xl shadow-2xl overflow-hidden flex flex-col
         left-3 right-3 bottom-[5.5rem] max-h-[calc(100dvh-7rem)]
-        sm:left-auto sm:right-6 sm:bottom-6 sm:w-[360px] sm:max-h-none"
+        sm:right-6 sm:left-auto sm:bottom-24 sm:w-[360px] sm:max-h-none"
       style={{
         border: '1px solid rgba(27,42,74,0.1)',
         boxShadow: '0 20px 60px rgba(27,42,74,0.2)',
@@ -174,7 +173,7 @@ export default function ContactPopup() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">No. of Travellers</label>
+                  <label className="block text-xs text-gray-500 mb-1">No. of Travelers</label>
                   <div className="flex items-center gap-2 rounded-lg border px-3 py-2" style={{ borderColor: '#e5e7eb' }}>
                     <Users size={13} className="text-gray-300 shrink-0" />
                     <select value={form.travellers} onChange={e => set('travellers', e.target.value)}
@@ -224,11 +223,18 @@ export default function ContactPopup() {
                   style={{ background: 'rgba(37,211,102,0.1)', color: '#16a34a', border: '1px solid rgba(37,211,102,0.2)' }}>
                   💬 WhatsApp
                 </a>
-                <a href="tel:+919589413700"
-                  className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold py-2.5 rounded-xl transition-all"
-                  style={{ background: 'rgba(255,140,66,0.08)', color: 'var(--primary)', border: '1px solid rgba(255,140,66,0.2)' }}>
-                  <Phone size={12} /> Call Us
-                </a>
+                <div className="flex-1 flex flex-col gap-1">
+                  <a href="tel:+918448622890"
+                    className="flex items-center justify-center gap-1.5 text-xs font-semibold py-1.5 rounded-lg transition-all"
+                    style={{ background: 'rgba(255,140,66,0.08)', color: 'var(--primary)', border: '1px solid rgba(255,140,66,0.2)' }}>
+                    <Phone size={11} /> 84486 22890
+                  </a>
+                  <a href="tel:+919136090840"
+                    className="flex items-center justify-center gap-1.5 text-xs font-semibold py-1.5 rounded-lg transition-all"
+                    style={{ background: 'rgba(255,140,66,0.08)', color: 'var(--primary)', border: '1px solid rgba(255,140,66,0.2)' }}>
+                    <Phone size={11} /> 91360 90840
+                  </a>
+                </div>
               </div>
             </form>
           )}

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git remote *)",
+      "Bash(git credential *)",
+      "Bash(unset GIT_ASKPASS)",
+      "Bash(unset GIT_TERMINAL_PROMPT)",
+      "Bash(git push *)",
+      "Bash(chmod +x \"/Users/deendayalfoujdar/Documents/trip pr chalo/tripprchalo/scripts/package-deploy.sh\")",
+      "Bash(bash \"/Users/deendayalfoujdar/Documents/trip pr chalo/tripprchalo/scripts/package-deploy.sh\")"
+    ]
+  }
+}

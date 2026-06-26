@@ -22,7 +22,7 @@ const EMPTY_FORM = {
   duration: '', tagline: '',
   highlights:          ['', '', '', ''],
   includes:            ['', '', '', ''],
-  exclusions:          ['', ''],
+  excludes:          ['', ''],
   batches:             [{ departureDate: '', seatsLeft: 20, status: 'Available' }] as Batch[],
   quadPrice:    '', triplePrice: '', doublePrice: '', advanceAmount: '2000',
   itinerary:           [{ title: '', description: '' }] as ItineraryDay[],
@@ -49,13 +49,13 @@ export default function AdminCreatePage() {
 
   function set(key: string, val: string) { setForm(f => ({ ...f, [key]: val })) }
 
-  function setList(key: 'highlights' | 'includes' | 'exclusions', i: number, val: string) {
+  function setList(key: 'highlights' | 'includes' | 'excludes', i: number, val: string) {
     setForm(f => { const a = [...f[key]]; a[i] = val; return { ...f, [key]: a } })
   }
-  function addList(key: 'highlights' | 'includes' | 'exclusions') {
+  function addList(key: 'highlights' | 'includes' | 'excludes') {
     setForm(f => ({ ...f, [key]: [...f[key], ''] }))
   }
-  function removeList(key: 'highlights' | 'includes' | 'exclusions', i: number) {
+  function removeList(key: 'highlights' | 'includes' | 'excludes', i: number) {
     setForm(f => ({ ...f, [key]: f[key].filter((_, idx) => idx !== i) }))
   }
 
@@ -118,7 +118,7 @@ export default function AdminCreatePage() {
       tagline:       form.tagline.trim(),
       highlights:    JSON.stringify(form.highlights.filter(Boolean)),
       includes:      JSON.stringify(form.includes.filter(Boolean)),
-      exclusions:    JSON.stringify(form.exclusions.filter(Boolean)),
+      excludes:    JSON.stringify((form.excludes ?? []).filter(Boolean)),
       quad_price:    form.quadPrice   ? Number(form.quadPrice)   : null,
       triple_price:  form.triplePrice ? Number(form.triplePrice) : null,
       double_price:  form.doublePrice ? Number(form.doublePrice) : null,
@@ -272,7 +272,7 @@ export default function AdminCreatePage() {
         <Section title="Trip Highlights">
           {form.highlights.map((h, i) => (
             <div key={i} className="flex gap-2 mb-2">
-              <input value={h} onChange={e => setList('highlights', i, e.target.value)} placeholder={`Highlight ${i+1}`}
+              <input value={h ?? ''} onChange={e => setList('highlights', i, e.target.value)} placeholder={`Highlight ${i+1}`}
                 className="flex-1 text-sm px-3 py-2 rounded-lg border outline-none" style={{ borderColor: '#e5e7eb' }} />
               <button type="button" onClick={() => removeList('highlights', i)} className="text-gray-300 hover:text-red-400"><Trash2 size={14} /></button>
             </div>
@@ -290,7 +290,7 @@ export default function AdminCreatePage() {
               <p className="text-xs font-semibold mb-2" style={{ color: '#16a34a' }}>✅ What&apos;s Included</p>
               {form.includes.map((inc, i) => (
                 <div key={i} className="flex gap-2 mb-2">
-                  <input value={inc} onChange={e => setList('includes', i, e.target.value)} placeholder={`e.g. Hotel stay`}
+                  <input value={inc ?? ''} onChange={e => setList('includes', i, e.target.value)} placeholder={`e.g. Hotel stay`}
                     className="flex-1 text-sm px-3 py-2 rounded-lg border outline-none" style={{ borderColor: '#e5e7eb' }} />
                   <button type="button" onClick={() => removeList('includes', i)} className="text-gray-300 hover:text-red-400"><Trash2 size={14} /></button>
                 </div>
@@ -302,14 +302,14 @@ export default function AdminCreatePage() {
             {/* Exclusions */}
             <div>
               <p className="text-xs font-semibold mb-2" style={{ color: '#dc2626' }}>❌ What&apos;s NOT Included</p>
-              {form.exclusions.map((exc, i) => (
+              {(form.excludes ?? []).map((exc, i) => (
                 <div key={i} className="flex gap-2 mb-2">
-                  <input value={exc} onChange={e => setList('exclusions', i, e.target.value)} placeholder={`e.g. Flight tickets`}
+                  <input value={exc ?? ''} onChange={e => setList('excludes', i, e.target.value)} placeholder={`e.g. Flight tickets`}
                     className="flex-1 text-sm px-3 py-2 rounded-lg border outline-none" style={{ borderColor: '#e5e7eb' }} />
-                  <button type="button" onClick={() => removeList('exclusions', i)} className="text-gray-300 hover:text-red-400"><Trash2 size={14} /></button>
+                  <button type="button" onClick={() => removeList('excludes', i)} className="text-gray-300 hover:text-red-400"><Trash2 size={14} /></button>
                 </div>
               ))}
-              <button type="button" onClick={() => addList('exclusions')} className="text-xs flex items-center gap-1 mt-1" style={{ color: '#dc2626' }}>
+              <button type="button" onClick={() => addList('excludes')} className="text-xs flex items-center gap-1 mt-1" style={{ color: '#dc2626' }}>
                 <Plus size={13} /> Add exclusion
               </button>
             </div>
@@ -328,7 +328,7 @@ export default function AdminCreatePage() {
                 >
                   <span className="text-xs font-bold shrink-0" style={{ color: 'var(--sky)' }}>Day {i+1}</span>
                   <input
-                    value={day.title}
+                    value={day.title ?? ''}
                     onChange={e => { e.stopPropagation(); setItinerary(i, 'title', e.target.value) }}
                     onClick={e => e.stopPropagation()}
                     placeholder={`e.g. Day ${i+1}: Arrival & Sightseeing`}
@@ -346,7 +346,7 @@ export default function AdminCreatePage() {
                   <div className="px-4 pb-4 pt-2">
                     <label className="block text-xs text-gray-400 mb-1">Day Description</label>
                     <textarea
-                      value={day.description}
+                      value={day.description ?? ''}
                       onChange={e => setItinerary(i, 'description', e.target.value)}
                       placeholder="Describe activities, meals, travel for this day..."
                       rows={4}
@@ -379,7 +379,7 @@ export default function AdminCreatePage() {
           <textarea
             value={form.tripTerms}
             onChange={e => set('tripTerms', e.target.value)}
-            placeholder="e.g. All travellers must carry a valid government ID. Trip captain's decision is final..."
+            placeholder="e.g. All travelers must carry a valid government ID. Trip captain's decision is final..."
             rows={5}
             className="w-full text-sm px-3 py-2 rounded-lg border outline-none resize-y focus:border-orange-400 transition-colors"
             style={{ borderColor: '#e5e7eb' }}
@@ -393,7 +393,7 @@ export default function AdminCreatePage() {
               style={{ background: '#f8f9fc', border: '1px solid rgba(0,194,255,0.15)' }}>
               <div className="flex-1 min-w-[140px]">
                 <label className="block text-xs text-gray-400 mb-1">Date</label>
-                <input type="date" value={b.departureDate} onChange={e => setBatch(i, 'departureDate', e.target.value)}
+                <input type="date" value={b.departureDate ?? ''} onChange={e => setBatch(i, 'departureDate', e.target.value)}
                   className="w-full text-sm px-3 py-2 rounded-lg border outline-none" style={{ borderColor: '#e5e7eb' }} />
               </div>
               <div style={{ width: '90px' }}>

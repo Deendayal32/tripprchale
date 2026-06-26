@@ -12,7 +12,7 @@ export async function GET() {
   if (!await isAuthed()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   try {
     const [rows] = await pool.execute<RowDataPacket[]>(
-      'SELECT * FROM contacts ORDER BY createdAt DESC LIMIT 200'
+      'SELECT * FROM contacts ORDER BY created_at DESC LIMIT 200'
     )
     return NextResponse.json({ contacts: rows })
   } catch {

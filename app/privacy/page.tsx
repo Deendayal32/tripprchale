@@ -18,7 +18,7 @@ const sections = [
   },
   {
     title: '3. Information Sharing',
-    body: 'We do not sell, rent, or trade your personal information to third parties. We may share limited information with trip captains, accommodation partners, or transport providers solely to fulfil your booking. We may disclose information if required by law or to protect the rights and safety of our travellers.',
+    body: 'We do not sell, rent, or trade your personal information to third parties. We may share limited information with trip captains, accommodation partners, or transport providers solely to fulfil your booking. We may disclose information if required by law or to protect the rights and safety of our travelers.',
   },
   {
     title: '4. Cookies & Analytics',
@@ -50,7 +50,7 @@ const sections = [
   },
   {
     title: '11. Contact Us',
-    body: 'For any privacy-related questions or requests, please contact us at hello@tripprchale.com or call +91 958 941 3700. We will respond within 7 business days.',
+    body: 'For any privacy-related questions or requests, please contact us at tripprchaleofficial@gmail.com or call +91 84486 22890 / +91 91360 90840. We will respond within 7 business days.',
   },
 ]
 

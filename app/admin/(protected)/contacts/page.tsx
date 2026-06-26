@@ -13,7 +13,7 @@ type Contact = {
   destination: string
   date: string
   message: string
-  createdAt: string
+  created_at: string
 }
 
 function fmtDate(d: string) {
@@ -71,7 +71,7 @@ export default function AdminContactsPage() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
         {[
           { label: 'Total Leads',  value: contacts.length,                              icon: '📋', color: 'var(--navy)' },
-          { label: 'Today',        value: contacts.filter(c => new Date(c.createdAt).toDateString() === new Date().toDateString()).length, icon: '📅', color: 'var(--sky)' },
+          { label: 'Today',        value: contacts.filter(c => new Date(c.created_at).toDateString() === new Date().toDateString()).length, icon: '📅', color: 'var(--sky)' },
           { label: 'With Message', value: contacts.filter(c => c.message?.trim()).length,  icon: '💬', color: 'var(--primary)' },
           { label: 'Group Trips',  value: contacts.filter(c => Number(c.travellers) > 2).length, icon: '👥', color: 'var(--teal)' },
         ].map(({ label, value, icon, color }) => (
@@ -115,7 +115,7 @@ export default function AdminContactsPage() {
                     </div>
                     <div>
                       <div className="font-semibold text-sm" style={{ color: 'var(--navy)' }}>{c.name}</div>
-                      <div className="text-xs text-gray-400">{fmtDate(c.createdAt)}</div>
+                      <div className="text-xs text-gray-400">{fmtDate(c.created_at)}</div>
                     </div>
                   </div>
 
@@ -140,7 +140,7 @@ export default function AdminContactsPage() {
                     {c.travellers && (
                       <div className="flex items-center gap-2 text-sm">
                         <Users size={13} className="shrink-0 text-gray-400" />
-                        <span className="text-gray-600">{c.travellers} traveller{Number(c.travellers) !== 1 ? 's' : ''}</span>
+                        <span className="text-gray-600">{c.travellers} traveler{Number(c.travellers) !== 1 ? 's' : ''}</span>
                       </div>
                     )}
                     {c.date && (

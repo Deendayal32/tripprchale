@@ -203,10 +203,10 @@ export default function Navbar() {
               🛠 Admin
             </Link>
 
-            <a href="tel:+919589413700"
+            <a href="tel:+918448622890"
               className="hidden lg:flex items-center gap-2 text-sm font-semibold text-white rounded-full px-4 py-2 transition-all hover:scale-105"
               style={{ background: 'linear-gradient(135deg, var(--primary) 0%, #E07330 100%)', boxShadow: 'var(--shadow-orange)' }}>
-              <Phone size={14} /> +91 958 941 3700
+              <Phone size={14} /> +91 84486 22890
             </a>
 
             <button type="button"
@@ -404,11 +404,18 @@ export default function Navbar() {
 
             {/* ── Call CTA ── */}
             <div className="px-4 pb-5 pt-2">
-              <a href="tel:+919589413700"
-                className="flex items-center gap-2 justify-center text-sm font-semibold text-white rounded-2xl px-4 py-3.5 transition-all"
-                style={{ background: 'linear-gradient(135deg, var(--primary) 0%, #E07330 100%)', boxShadow: 'var(--shadow-orange)' }}>
-                <Phone size={15} /> +91 958 941 3700
-              </a>
+              <div className="flex flex-col gap-2">
+                <a href="tel:+918448622890"
+                  className="flex items-center gap-2 justify-center text-sm font-semibold text-white rounded-2xl px-4 py-3 transition-all"
+                  style={{ background: 'linear-gradient(135deg, var(--primary) 0%, #E07330 100%)', boxShadow: 'var(--shadow-orange)' }}>
+                  <Phone size={15} /> +91 84486 22890
+                </a>
+                <a href="tel:+919136090840"
+                  className="flex items-center gap-2 justify-center text-sm font-semibold text-white rounded-2xl px-4 py-3 transition-all"
+                  style={{ background: 'linear-gradient(135deg, var(--primary) 0%, #E07330 100%)', boxShadow: 'var(--shadow-orange)' }}>
+                  <Phone size={15} /> +91 91360 90840
+                </a>
+              </div>
             </div>
           </div>
         </>
@@ -417,7 +424,7 @@ export default function Navbar() {
       {/* ══════════ FLOATING WHATSAPP ══════════ */}
       <a href="https://wa.me/919717096999?text=Hi%20TripprChale!%20I%20want%20to%20check%20seat%20availability."
         target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110"
+        className="fixed bottom-20 lg:bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110"
         style={{ background: '#25D366', boxShadow: '0 4px 20px rgba(37,211,102,0.4)' }}>
         <svg viewBox="0 0 32 32" width="28" height="28" fill="white">
           <path d="M16 2C8.28 2 2 8.28 2 16c0 2.44.65 4.73 1.78 6.72L2 30l7.5-1.73A13.92 13.92 0 0016 30c7.72 0 14-6.28 14-14S23.72 2 16 2zm0 25.5a11.45 11.45 0 01-5.83-1.6l-.42-.25-4.45 1.03 1.06-4.33-.27-.44A11.5 11.5 0 1116 27.5zm6.3-8.6c-.35-.17-2.06-1.01-2.38-1.13-.32-.11-.55-.17-.78.18-.23.35-.88 1.13-1.08 1.36-.2.23-.4.26-.74.09-.35-.17-1.47-.54-2.8-1.73-1.03-.92-1.73-2.06-1.93-2.41-.2-.35-.02-.54.15-.71.15-.15.35-.4.52-.6.17-.2.23-.35.35-.58.11-.23.06-.43-.03-.6-.09-.17-.78-1.87-1.07-2.56-.28-.67-.57-.58-.78-.59h-.66c-.23 0-.6.09-.91.43-.32.35-1.2 1.17-1.2 2.86 0 1.68 1.23 3.31 1.4 3.54.17.23 2.42 3.7 5.87 5.19.82.35 1.46.56 1.96.72.82.26 1.57.22 2.16.13.66-.1 2.06-.84 2.35-1.66.29-.82.29-1.52.2-1.66-.08-.14-.31-.23-.66-.4z"/>

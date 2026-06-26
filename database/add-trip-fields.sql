@@ -5,8 +5,8 @@
 -- ═══════════════════════════════════════════════════════════════
 
 ALTER TABLE `trips`
-  ADD COLUMN IF NOT EXISTS `exclusions`          JSON    DEFAULT NULL          AFTER `includes`,
-  ADD COLUMN IF NOT EXISTS `quad_price`          INT     DEFAULT NULL          AFTER `exclusions`,
+  ADD COLUMN IF NOT EXISTS `excludes`          JSON    DEFAULT NULL          AFTER `includes`,
+  ADD COLUMN IF NOT EXISTS `quad_price`          INT     DEFAULT NULL          AFTER `excludes`,
   ADD COLUMN IF NOT EXISTS `triple_price`        INT     DEFAULT NULL          AFTER `quad_price`,
   ADD COLUMN IF NOT EXISTS `double_price`        INT     DEFAULT NULL          AFTER `triple_price`,
   ADD COLUMN IF NOT EXISTS `advance_amount`      INT     NOT NULL DEFAULT 2000 AFTER `double_price`,

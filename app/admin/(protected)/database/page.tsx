@@ -10,11 +10,11 @@ import { ChevronLeft, Play, ChevronDown, ChevronUp, CheckCircle, XCircle, Loader
 const MIGRATIONS = [
   {
     id: 'create-tables',
-    title: 'Create All Base Tables',
-    description: 'Creates trips, categories, batches, contacts and bookings tables with all current columns. Safe to re-run (uses IF NOT EXISTS).',
+    title: 'Create All Tables (full schema)',
+    description: 'Creates all 5 tables with every column the app uses. Safe to re-run — uses IF NOT EXISTS so existing tables are never dropped.',
     sql: `CREATE TABLE IF NOT EXISTS \`trips\` (
   \`id\`                   INT           NOT NULL AUTO_INCREMENT,
-  \`slug\`                 VARCHAR(255)  NOT NULL DEFAULT '' UNIQUE,
+  \`slug\`                 VARCHAR(255)  NOT NULL DEFAULT '',
   \`name\`                 VARCHAR(255)  NOT NULL,
   \`destination\`          VARCHAR(255)  NOT NULL,
   \`category\`             ENUM('weekend','backpacking','himalayan','international') NOT NULL DEFAULT 'weekend',
@@ -31,7 +31,7 @@ const MIGRATIONS = [
   \`tagline\`              VARCHAR(255)  NOT NULL DEFAULT '',
   \`highlights\`           JSON          DEFAULT NULL,
   \`includes\`             JSON          DEFAULT NULL,
-  \`exclusions\`           JSON          DEFAULT NULL,
+  \`excludes\`             JSON          DEFAULT NULL,
   \`quad_price\`           INT           DEFAULT NULL,
   \`triple_price\`         INT           DEFAULT NULL,
   \`double_price\`         INT           DEFAULT NULL,
@@ -39,6 +39,9 @@ const MIGRATIONS = [
   \`itinerary\`            JSON          DEFAULT NULL,
   \`cancellation_policy\`  TEXT          DEFAULT NULL,
   \`trip_terms\`           TEXT          DEFAULT NULL,
+  \`country\`              VARCHAR(100)  DEFAULT '',
+  \`startDate\`            DATE          DEFAULT NULL,
+  \`endDate\`              DATE          DEFAULT NULL,
   \`created_at\`           TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   \`updated_at\`           TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (\`id\`),
@@ -47,11 +50,12 @@ const MIGRATIONS = [
 
 CREATE TABLE IF NOT EXISTS \`categories\` (
   \`id\`         INT          NOT NULL AUTO_INCREMENT,
-  \`slug\`       VARCHAR(60)  NOT NULL UNIQUE,
+  \`slug\`       VARCHAR(60)  NOT NULL,
   \`label\`      VARCHAR(100) NOT NULL,
   \`emoji\`      VARCHAR(10)  DEFAULT '🌍',
   \`sort_order\` INT          DEFAULT 0,
-  PRIMARY KEY (\`id\`)
+  PRIMARY KEY (\`id\`),
+  UNIQUE KEY \`idx_cat_slug\` (\`slug\`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS \`batches\` (
@@ -67,12 +71,15 @@ CREATE TABLE IF NOT EXISTS \`batches\` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS \`contacts\` (
-  \`id\`         INT          NOT NULL AUTO_INCREMENT,
-  \`name\`       VARCHAR(255) NOT NULL,
-  \`email\`      VARCHAR(255) NOT NULL,
-  \`phone\`      VARCHAR(20)  DEFAULT NULL,
-  \`message\`    TEXT         DEFAULT NULL,
-  \`created_at\` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  \`id\`          INT          NOT NULL AUTO_INCREMENT,
+  \`name\`        VARCHAR(255) NOT NULL,
+  \`email\`       VARCHAR(255) NOT NULL DEFAULT '',
+  \`phone\`       VARCHAR(20)  NOT NULL DEFAULT '',
+  \`travellers\`  VARCHAR(20)  DEFAULT '1',
+  \`destination\` VARCHAR(255) DEFAULT '',
+  \`date\`        VARCHAR(100) DEFAULT '',
+  \`message\`     TEXT         DEFAULT NULL,
+  \`created_at\`  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (\`id\`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -104,18 +111,27 @@ SET slug = CONCAT(LOWER(REGEXP_REPLACE(name, '[^a-zA-Z0-9]+', '-')), '-', id)
 WHERE slug = '' OR slug IS NULL`,
   },
   {
-    id: 'add-enhanced-fields',
-    title: 'Add Enhanced Trip Fields',
-    description: 'Adds exclusions, sharing prices (quad/triple/double), advance amount, itinerary, cancellation policy and trip terms columns.',
-    sql: `ALTER TABLE trips
-  ADD COLUMN IF NOT EXISTS exclusions          JSON    DEFAULT NULL          AFTER includes,
-  ADD COLUMN IF NOT EXISTS quad_price          INT     DEFAULT NULL          AFTER exclusions,
-  ADD COLUMN IF NOT EXISTS triple_price        INT     DEFAULT NULL          AFTER quad_price,
-  ADD COLUMN IF NOT EXISTS double_price        INT     DEFAULT NULL          AFTER triple_price,
-  ADD COLUMN IF NOT EXISTS advance_amount      INT     NOT NULL DEFAULT 2000 AFTER double_price,
-  ADD COLUMN IF NOT EXISTS itinerary           JSON    DEFAULT NULL          AFTER advance_amount,
-  ADD COLUMN IF NOT EXISTS cancellation_policy TEXT    DEFAULT NULL          AFTER itinerary,
-  ADD COLUMN IF NOT EXISTS trip_terms          TEXT    DEFAULT NULL          AFTER cancellation_policy`,
+    id: 'add-all-columns',
+    title: '⚡ Add ALL Missing Columns (run this first)',
+    description: 'Adds every column the app needs — excludes, quad/triple/double price, advance amount, itinerary, cancellation policy, trip terms, slug, tagline, plus contacts extras. Each column is a separate statement so already-existing columns just show as skipped.',
+    sql: `ALTER TABLE trips ADD COLUMN slug    VARCHAR(255) NOT NULL DEFAULT '' AFTER id;
+ALTER TABLE trips ADD UNIQUE INDEX idx_trips_slug (slug);
+ALTER TABLE trips ADD COLUMN tagline VARCHAR(255) NOT NULL DEFAULT '' AFTER duration;
+ALTER TABLE trips ADD COLUMN excludes          JSON DEFAULT NULL;
+ALTER TABLE trips ADD COLUMN quad_price        INT  DEFAULT NULL;
+ALTER TABLE trips ADD COLUMN triple_price      INT  DEFAULT NULL;
+ALTER TABLE trips ADD COLUMN double_price      INT  DEFAULT NULL;
+ALTER TABLE trips ADD COLUMN advance_amount    INT  NOT NULL DEFAULT 2000;
+ALTER TABLE trips ADD COLUMN itinerary         JSON DEFAULT NULL;
+ALTER TABLE trips ADD COLUMN cancellation_policy TEXT DEFAULT NULL;
+ALTER TABLE trips ADD COLUMN trip_terms          TEXT DEFAULT NULL;
+ALTER TABLE trips ADD COLUMN country             VARCHAR(100) DEFAULT '';
+ALTER TABLE trips ADD COLUMN startDate           DATE DEFAULT NULL;
+ALTER TABLE trips ADD COLUMN endDate             DATE DEFAULT NULL;
+ALTER TABLE contacts ADD COLUMN travellers  VARCHAR(20)  DEFAULT '1';
+ALTER TABLE contacts ADD COLUMN destination VARCHAR(255) DEFAULT '';
+ALTER TABLE contacts ADD COLUMN date        VARCHAR(100) DEFAULT '';
+UPDATE trips SET slug = CONCAT(LOWER(REPLACE(REPLACE(name,' ','-'),'/','-')),'-',id) WHERE slug = '' OR slug IS NULL`,
   },
   {
     id: 'fix-collation',
