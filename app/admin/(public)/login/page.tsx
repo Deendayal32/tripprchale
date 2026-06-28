@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Lock, User, Eye, EyeOff, AlertCircle, MapPin } from 'lucide-react'
+import BrandName from '@/components/BrandName'
 
 export default function AdminLoginPage() {
   const router = useRouter()
@@ -89,7 +90,7 @@ export default function AdminLoginPage() {
         {/* Footer */}
         <p className="text-white/20 text-xs flex items-center gap-1.5">
           <MapPin size={11} />
-          TripprChale · Crafting Unforgettable Journeys
+          <BrandName dark /> · Crafting Unforgettable Journeys
         </p>
       </div>
 
@@ -190,7 +191,7 @@ export default function AdminLoginPage() {
           </div>
 
           <p className="text-center text-white/20 text-xs mt-6">
-            Authorised staff only · TripprChale © 2025
+            Authorised staff only · <BrandName dark /> © 2025
           </p>
         </div>
       </div>

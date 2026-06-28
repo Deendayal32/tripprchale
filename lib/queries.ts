@@ -25,6 +25,7 @@ export type Trip = {
   totalSeats: number
   seatsLeft: number
   image: string
+  images: string[]
   emoji: string
   badge: string
   badgeColor: string
@@ -58,6 +59,7 @@ function mapRow(t: RowDataPacket, batches: RowDataPacket[]): Trip {
     totalSeats:    t.totalSeats,
     seatsLeft:     t.seatsLeft,
     image:         t.image || '',
+    images:        typeof t.images === 'string' ? JSON.parse(t.images) : (t.images ?? []),
     emoji:         t.emoji ?? '✈️',
     badge:         t.badge ?? '',
     badgeColor:    t.badgeColor ?? '#FF914D',

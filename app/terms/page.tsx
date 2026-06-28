@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import BrandName from '@/components/BrandName'
 
 export const metadata: Metadata = {
   title: 'Terms & Conditions – TripprChale',
@@ -69,7 +70,7 @@ export default function TermsPage() {
         {/* Content */}
         <div className="max-w-3xl mx-auto px-4 py-12 sm:py-16">
           <p className="text-sm mb-10" style={{ color: 'var(--text-muted)' }}>
-            Please read these Terms &amp; Conditions carefully before booking a trip with TripprChale.
+            Please read these Terms &amp; Conditions carefully before booking a trip with <BrandName />.
             These terms apply to all travelers and bookings made through our website or any other channel.
           </p>
 

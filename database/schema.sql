@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS trips (
   totalSeats           INT           NOT NULL DEFAULT 20,
   seatsLeft            INT           NOT NULL DEFAULT 20,
   image                VARCHAR(600)  DEFAULT NULL,
+  images               JSON          DEFAULT NULL,
   emoji                VARCHAR(10)   DEFAULT '✈️',
   badge                VARCHAR(60)   DEFAULT NULL,
   badgeColor           VARCHAR(20)   DEFAULT '#FF914D',

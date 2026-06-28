@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { CheckCircle, XCircle, ChevronDown, ChevronUp, Star, CalendarDays } from 'lucide-react'
 import { Trip } from '@/lib/queries'
+import BrandName from '@/components/BrandName'
 
 type Tab = 'overview' | 'itinerary' | 'inclusions' | 'policies'
 
@@ -114,7 +115,7 @@ export default function TripTabs({ trip, today }: { trip: Trip; today: string })
             <div className="space-y-3">
               {[
                 { name: 'Priya S.',  text: 'Absolutely loved this trip! The captain was fantastic and so organised.' },
-                { name: 'Rahul M.', text: 'Best experience ever. Will definitely book again with TripprChale!' },
+                { name: 'Rahul M.', text: <>Best experience ever. Will definitely book again with <BrandName />!</> },
               ].map(({ name, text }) => (
                 <div key={name} className="p-3 rounded-xl" style={{ background: '#fafafa', border: '1px solid #f0f0f0' }}>
                   <div className="flex gap-0.5 mb-1">
@@ -237,7 +238,7 @@ export default function TripTabs({ trip, today }: { trip: Trip; today: string })
               <div className="space-y-2 text-sm text-gray-600">
                 <p>• All travelers must carry a valid government-issued photo ID.</p>
                 <p>• The trip captain&apos;s decision is final in all matters on the trip.</p>
-                <p>• TripprChale reserves the right to modify itineraries due to weather or safety concerns.</p>
+                <p>• <BrandName /> reserves the right to modify itineraries due to weather or safety concerns.</p>
                 <p>• Travelers with medical conditions must inform us before booking.</p>
                 <p>• Behaviour endangering fellow travelers may result in removal without refund.</p>
               </div>

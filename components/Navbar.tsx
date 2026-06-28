@@ -383,7 +383,7 @@ export default function Navbar() {
                 </Link>
               </li>
               <li>
-                <a href="https://wa.me/919717096999"
+                <a href="https://wa.me/918448622890"
                   target="_blank" rel="noopener noreferrer"
                   className="flex items-center gap-2.5 px-4 py-3 text-sm font-medium rounded-xl transition-all hover:bg-green-50"
                   style={{ color: '#16a34a' }}
@@ -422,7 +422,7 @@ export default function Navbar() {
       )}
 
       {/* ══════════ FLOATING WHATSAPP ══════════ */}
-      <a href="https://wa.me/919717096999?text=Hi%20TripprChale!%20I%20want%20to%20check%20seat%20availability."
+      <a href="https://wa.me/918448622890?text=Hi%20TripprChale!%20I%20want%20to%20check%20seat%20availability."
         target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp"
         className="fixed bottom-20 lg:bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110"
         style={{ background: '#25D366', boxShadow: '0 4px 20px rgba(37,211,102,0.4)' }}>

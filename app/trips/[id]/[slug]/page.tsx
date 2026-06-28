@@ -10,6 +10,7 @@ import TripBookingCard from '@/components/TripBookingCard'
 import TripTabs from '@/components/TripTabs'
 import ContactPopup from '@/components/ContactPopup'
 import { MapPin, Clock, Users, ChevronLeft } from 'lucide-react'
+import TripImageCarousel from '@/components/TripImageCarousel'
 
 type Props = {
   params: Promise<{ id: string; slug: string }>
@@ -27,30 +28,22 @@ export default async function TripDetailPage({ params }: Props) {
     <main style={{ background: '#f8f9fa' }}>
       <Navbar />
 
-      {/* ── Hero image — completely clean, nothing on top ── */}
+      {/* ── Hero carousel ── */}
       <div style={{ marginTop: '4rem', height: 'clamp(220px, 40vw, 420px)', overflow: 'hidden' }}>
-        {trip.image ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            src={trip.image}
-            alt={trip.name}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-8xl"
-            style={{ background: 'linear-gradient(135deg, var(--navy) 0%, #0f3460 100%)' }}>
-            {trip.emoji}
-          </div>
-        )}
+        <TripImageCarousel
+          images={trip.images?.length ? trip.images : (trip.image ? [trip.image] : [])}
+          alt={trip.name}
+          emoji={trip.emoji}
+        />
       </div>
 
       {/* ── Navy bar: back link + trip name + badges + meta ── */}
-      <div style={{ background: 'var(--navy)' }}>
+      <div style={{ background: '#1B2A4A' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-4 pb-5">
 
           {/* Back link */}
           <Link href="/"
-            className="inline-flex items-center gap-1 text-xs mb-3 transition-colors hover:text-white"
+            className="inline-flex items-center gap-1 text-xs mb-3 transition-colors"
             style={{ color: 'rgba(255,255,255,0.5)' }}>
             <ChevronLeft size={13} /> Back to Trips
           </Link>
@@ -58,41 +51,45 @@ export default async function TripDetailPage({ params }: Props) {
           {/* Title + badges row */}
           <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
             <h1
-              className="font-bold text-white leading-tight"
-              style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2.4rem)' }}>
+              className="font-bold leading-tight"
+              style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2.4rem)', color: '#ffffff' }}>
               {trip.emoji} {trip.name}
             </h1>
-            {(trip.badge || trip.durationBadge) && (
-              <div className="flex flex-wrap gap-2 shrink-0 mt-1">
-                {trip.badge && (
-                  <span className="text-white text-xs font-bold px-3 py-1 rounded-full"
-                    style={{ background: trip.badgeColor }}>
-                    {trip.badge}
-                  </span>
-                )}
-                {trip.durationBadge && (
-                  <span className="text-xs font-semibold px-3 py-1 rounded-full"
-                    style={{ background: 'rgba(255,255,255,0.15)', color: 'white' }}>
-                    {trip.durationBadge}
-                  </span>
-                )}
-              </div>
-            )}
+            <div className="flex flex-wrap gap-2 shrink-0 mt-1">
+              {trip.badge && (
+                <span className="text-xs font-bold px-3 py-1 rounded-full"
+                  style={{ background: trip.badgeColor, color: '#fff' }}>
+                  {trip.badge}
+                </span>
+              )}
+              {trip.category && (
+                <span className="text-xs font-semibold px-3 py-1 rounded-full capitalize"
+                  style={{ background: 'rgba(255,255,255,0.15)', color: '#ffffff' }}>
+                  {trip.category}
+                </span>
+              )}
+              {trip.durationBadge && (
+                <span className="text-xs font-semibold px-3 py-1 rounded-full"
+                  style={{ background: 'rgba(41,171,226,0.25)', color: '#29ABE2' }}>
+                  {trip.durationBadge}
+                </span>
+              )}
+            </div>
           </div>
 
           {/* Meta info */}
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm" style={{ color: 'rgba(255,255,255,0.72)' }}>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2" style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.875rem' }}>
             <span className="flex items-center gap-1.5">
-              <MapPin size={13} style={{ color: 'var(--primary)' }} />
-              {trip.destination}
+              <MapPin size={13} style={{ color: '#FF8C42' }} />
+              <span style={{ color: 'rgba(255,255,255,0.85)' }}>{trip.destination}</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <Clock size={13} style={{ color: 'var(--sky)' }} />
-              {trip.duration}
+              <Clock size={13} style={{ color: '#29ABE2' }} />
+              <span style={{ color: 'rgba(255,255,255,0.85)' }}>{trip.duration}</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <Users size={13} style={{ color: 'var(--teal)' }} />
-              Max {trip.totalSeats} people
+              <Users size={13} style={{ color: '#2DBFBB' }} />
+              <span style={{ color: 'rgba(255,255,255,0.85)' }}>Max {trip.totalSeats} people</span>
             </span>
           </div>
         </div>

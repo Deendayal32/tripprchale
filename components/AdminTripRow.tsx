@@ -93,9 +93,9 @@ export default function AdminTripRow({ trip }: { trip: Trip }) {
           title="View on site">
           <ExternalLink size={14} />
         </Link>
-        <Link href={`/trips/${trip.id}/${trip.slug}`} target="_blank"
+        <Link href={`/admin/trips/${trip.id}/edit`}
           className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-orange-500 hover:bg-orange-50 transition-all"
-          title="Edit (view on site)">
+          title="Edit trip">
           <Edit2 size={14} />
         </Link>
         <button onClick={handleDelete} disabled={deleting}

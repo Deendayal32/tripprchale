@@ -10,6 +10,7 @@ import TripFilters from '@/components/TripFilters'
 import { getTrips, Trip } from '@/lib/queries'
 import { MapPin, Clock, Users, ChevronRight, Star } from 'lucide-react'
 import ContactPopup from '@/components/ContactPopup'
+import BrandName from '@/components/BrandName'
 
 type PageProps = {
   searchParams: Promise<{ category?: string; month?: string; search?: string }>
@@ -163,11 +164,11 @@ export default async function HomePage({ searchParams }: PageProps) {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-3"
-              style={{ background: 'rgba(255,140,66,0.1)', color: 'var(--primary)', border: '1px solid rgba(255,140,66,0.2)' }}>
-              💎 The TripprChale Advantage
+              style={{ background: 'rgba(255,140,66,0.1)', border: '1px solid rgba(255,140,66,0.2)' }}>
+              💎 The <BrandName /> Advantage
             </div>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl">
-              <span style={{ color: '#FF914D' }}>Why Trippr</span><span style={{ color: '#1B2A4A' }}>chale?</span>
+            <h2 className="font-display font-bold text-3xl sm:text-4xl" style={{ color: 'var(--navy)' }}>
+              Why <BrandName />?
             </h2>
           </div>
 
@@ -235,9 +236,9 @@ export default async function HomePage({ searchParams }: PageProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { name: 'Priya S.', trip: 'Kasol Manali Adventure',   avatar: '👩', text: 'Absolutely loved it! The trip captain was fantastic and the group was super fun. TripprChale made it stress-free!' },
-              { name: 'Rahul M.', trip: 'Goa Beach Backpacking',    avatar: '👨', text: 'Best 5 days of my life. Met amazing people, the itinerary was perfectly balanced between fun and exploration.' },
-              { name: 'Sneha K.', trip: 'Rajasthan Royal Escapade', avatar: '👩‍🦱', text: 'The desert safari was mind-blowing. TripprChale never disappoints — every detail was thought through!' },
+              { name: 'Priya S.', trip: 'Kasol Manali Adventure',   avatar: '👩', text: <>Absolutely loved it! The trip captain was fantastic and the group was super fun. <BrandName /> made it stress-free!</> },
+              { name: 'Rahul M.', trip: 'Goa Beach Backpacking',    avatar: '👨', text: <>Best 5 days of my life. Met amazing people, the itinerary was perfectly balanced between fun and exploration.</> },
+              { name: 'Sneha K.', trip: 'Rajasthan Royal Escapade', avatar: '👩‍🦱', text: <>The desert safari was mind-blowing. <BrandName /> never disappoints — every detail was thought through!</> },
             ].map(({ name, trip, avatar, text }) => (
               <div key={name} className="rounded-2xl p-6 bg-white"
                 style={{ border: '1px solid var(--border-card)', boxShadow: 'var(--shadow-sm)' }}>
@@ -282,7 +283,7 @@ export default async function HomePage({ searchParams }: PageProps) {
             Our team responds in under 5 minutes!
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full max-w-xs sm:max-w-none mx-auto">
-            <a href="https://wa.me/919717096999?text=Hi%20TripprChale!%20I%20want%20to%20book%20a%20trip."
+            <a href="https://wa.me/918448622890?text=Hi%20TripprChale!%20I%20want%20to%20book%20a%20trip."
               target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-2.5 bg-white font-semibold text-sm px-7 py-3.5 rounded-full transition-all hover:scale-105 shadow-lg w-full sm:w-auto justify-center"
               style={{ color: '#16a34a' }}>

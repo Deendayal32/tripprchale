@@ -17,7 +17,7 @@ const FALLBACK_CATS: Category[] = [
 
 const EMPTY_FORM = {
   name: '', destination: '', category: 'weekend', price: '', originalPrice: '',
-  totalSeats: '20', seatsLeft: '20', image: '', emoji: '✈️',
+  totalSeats: '20', seatsLeft: '20', image: '', images: [] as string[], emoji: '✈️',
   badge: 'New', badgeColor: '#FF914D', difficulty: 'Easy',
   duration: '', tagline: '',
   highlights:          ['', '', '', ''],
@@ -35,10 +35,13 @@ export default function AdminCreatePage() {
   const [status,     setStatus]     = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [message,    setMessage]    = useState('')
   const [categories, setCategories] = useState<Category[]>(FALLBACK_CATS)
-  const [uploading,  setUploading]  = useState(false)
-  const [uploadErr,  setUploadErr]  = useState('')
-  const [openDays,   setOpenDays]   = useState<Record<number, boolean>>({ 0: true })
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [uploading,       setUploading]       = useState(false)
+  const [uploadErr,       setUploadErr]       = useState('')
+  const [galleryUploading, setGalleryUploading] = useState(false)
+  const [galleryErr,       setGalleryErr]       = useState('')
+  const [openDays,         setOpenDays]         = useState<Record<number, boolean>>({ 0: true })
+  const fileInputRef    = useRef<HTMLInputElement>(null)
+  const galleryInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     fetch('/api/categories')
@@ -92,6 +95,30 @@ export default function AdminCreatePage() {
     }
   }
 
+  async function handleGalleryUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? [])
+    if (!files.length) return
+    setGalleryUploading(true); setGalleryErr('')
+    try {
+      for (const file of files) {
+        const fd = new FormData()
+        fd.append('file', file)
+        const res  = await fetch('/api/admin/upload', { method: 'POST', body: fd })
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.error || 'Upload failed')
+        setForm(f => ({ ...f, images: [...f.images, data.url] }))
+      }
+    } catch (err: unknown) {
+      setGalleryErr(err instanceof Error ? err.message : 'Upload failed')
+    } finally {
+      setGalleryUploading(false)
+      if (galleryInputRef.current) galleryInputRef.current.value = ''
+    }
+  }
+  function removeGalleryImage(i: number) {
+    setForm(f => ({ ...f, images: f.images.filter((_, idx) => idx !== i) }))
+  }
+
   function setBatch(i: number, field: keyof Batch, val: string | number) {
     setForm(f => { const b = [...f.batches]; b[i] = { ...b[i], [field]: val }; return { ...f, batches: b } })
   }
@@ -110,6 +137,7 @@ export default function AdminCreatePage() {
       totalSeats:    Number(form.totalSeats),
       seatsLeft:     Number(form.seatsLeft),
       image:         form.image.trim(),
+      images:        JSON.stringify(form.images),
       emoji:         form.emoji,
       badge:         form.badge,
       badgeColor:    form.badgeColor,
@@ -217,6 +245,32 @@ export default function AdminCreatePage() {
               )}
             </div>
           </Row>
+        </Section>
+
+        {/* ── Gallery Images ── */}
+        <Section title="Gallery Images (Carousel)">
+          <p className="text-xs text-gray-400 -mt-1 mb-3">Upload multiple photos shown in the trip detail carousel. Select several files at once.</p>
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mb-2">
+            {form.images.map((url, i) => (
+              <div key={i} className="relative group aspect-square">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={url} alt="" className="w-full h-full object-cover rounded-lg border" style={{ borderColor: '#e5e7eb' }} />
+                <button type="button" onClick={() => removeGalleryImage(i)}
+                  className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full items-center justify-center hidden group-hover:flex">
+                  <X size={10} />
+                </button>
+              </div>
+            ))}
+            <button type="button" onClick={() => galleryInputRef.current?.click()} disabled={galleryUploading}
+              className="aspect-square rounded-lg border-2 border-dashed flex flex-col items-center justify-center gap-1 transition-colors"
+              style={{ borderColor: '#e5e7eb', color: galleryUploading ? '#d1d5db' : '#9ca3af' }}>
+              {galleryUploading
+                ? <div className="w-5 h-5 border-2 border-gray-200 border-t-orange-400 rounded-full animate-spin" />
+                : <><Plus size={18} /><span className="text-xs">Add</span></>}
+            </button>
+          </div>
+          <input ref={galleryInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handleGalleryUpload} />
+          {galleryErr && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle size={12} />{galleryErr}</p>}
         </Section>
 
         {/* ── Pricing & Seats ── */}

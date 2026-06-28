@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react'
+import BrandName from '@/components/BrandName'
 
 const IconInstagram = () => (
   <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -202,14 +203,14 @@ export default function Footer() {
 
           {/* WhatsApp button */}
           <a
-            href="https://wa.me/919717096999?text=Hi%20TripprChale!%20I%20want%20to%20check%20seat%20availability."
+            href="https://wa.me/918448622890?text=Hi%20TripprChale!%20I%20want%20to%20check%20seat%20availability."
             target="_blank"
             rel="noopener noreferrer"
             className="mt-5 w-full flex items-center justify-center gap-2 text-sm font-semibold py-2.5 rounded-xl transition-all hover:scale-105"
             style={{ background: '#25D366', color: '#fff' }}
           >
             <MessageCircle size={15} />
-            WhatsApp: +91 971 709 6999
+            WhatsApp: +91 84486 22890
           </a>
         </div>
       </div>
@@ -220,7 +221,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="text-xs text-center sm:text-left" style={{ color: 'rgba(255,255,255,0.38)' }}>
-            © {new Date().getFullYear()} TripprChale.com &nbsp;·&nbsp; All rights reserved
+            © {new Date().getFullYear()} <BrandName dark />.com &nbsp;·&nbsp; All rights reserved
           </p>
 
           {/* Payment trust badges */}

@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
     const {
       name, destination, category, price, originalPrice,
-      totalSeats, seatsLeft, image, emoji, badge, badgeColor,
+      totalSeats, seatsLeft, image, images, emoji, badge, badgeColor,
       difficulty, duration, tagline,
       highlights, includes, excludes,
       quad_price, triple_price, double_price, advance_amount,
@@ -59,6 +59,7 @@ export async function POST(req: NextRequest) {
       totalSeats:    totalSeats    ?? 20,
       seatsLeft:     seatsLeft     ?? totalSeats ?? 20,
       image:         image         ?? '',
+      images:        images        ?? '[]',
       emoji:         emoji         ?? '✈️',
       badge:         badge         ?? '',
       badgeColor:    badgeColor    ?? '#FF914D',

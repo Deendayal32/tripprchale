@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import BrandName from '@/components/BrandName'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy – TripprChale',
@@ -73,7 +74,7 @@ export default function PrivacyPage() {
         {/* Content */}
         <div className="max-w-3xl mx-auto px-4 py-12 sm:py-16">
           <p className="text-sm mb-10" style={{ color: 'var(--text-muted)' }}>
-            At TripprChale, your privacy matters. This policy explains what personal information we
+            At <BrandName />, your privacy matters. This policy explains what personal information we
             collect, why we collect it, and how we keep it safe.
           </p>
 

@@ -39,7 +39,16 @@ export default function TripBookingCard({ trip }: { trip: Trip }) {
     ? (sharingOptions.find(o => o.key === sharingType)?.price ?? trip.price)
     : trip.price
 
-  const waBookLink = `https://wa.me/919717096999?text=Hi%20TripprChale!%20I%20want%20to%20book%20${encodeURIComponent(trip.name)}${selectedBatch ? `%20departing%20${encodeURIComponent(fmtDate(selectedBatch.departureDate))}` : ''}${hasSharing && sharingType !== 'standard' ? `%20(${sharingType}%20sharing)` : ''}.%20Please%20share%20payment%20details.`
+  const waBookLink = `https://wa.me/918448622890?text=${encodeURIComponent(
+    `Hi TripprChale! 🙏\n\nI want to book this trip:\n\n` +
+    `🏔️ Trip: ${trip.name}\n` +
+    `📍 Destination: ${trip.destination}\n` +
+    `⏱️ Duration: ${trip.duration}\n` +
+    (selectedBatch ? `📅 Departure: ${fmtDate(selectedBatch.departureDate)}\n` : '') +
+    `💰 Price: ₹${displayPrice.toLocaleString('en-IN')} per person\n` +
+    (hasSharing && sharingType !== 'standard' ? `🛏️ Sharing: ${sharingType} sharing\n` : '') +
+    `\nPlease share payment details to confirm my booking.`
+  )}`
 
   function handleShare() {
     const url  = typeof window !== 'undefined' ? window.location.href : ''
@@ -198,7 +207,7 @@ export default function TripBookingCard({ trip }: { trip: Trip }) {
         </div>
 
         {/* WhatsApp enquiry */}
-        <a href={`https://wa.me/919717096999?text=Hi!%20I%20want%20to%20know%20more%20about%20${encodeURIComponent(trip.name)}`}
+        <a href={`https://wa.me/918448622890?text=${encodeURIComponent(`Hi TripprChale! 🙏\n\nI want to know more about:\n🏔️ ${trip.name}\n📍 ${trip.destination}\n⏱️ ${trip.duration}\n💰 Starting ₹${trip.price.toLocaleString('en-IN')}/person\n\nPlease share more details.`)}`}
           target="_blank" rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 w-full text-sm font-semibold py-3 rounded-full transition-all hover:bg-green-50"
           style={{ border: '2px solid #25D366', color: '#25D366' }}>

@@ -123,7 +123,7 @@ export default function ContactPopup() {
                 Thanks <strong>{form.name}</strong>! We'll contact you on <strong>{form.phone}</strong> within 30 minutes.
               </p>
               <a
-                href={`https://wa.me/919717096999?text=Hi%20TripprChale!%20I%20filled%20the%20enquiry%20form.%20My%20name%20is%20${encodeURIComponent(form.name)}`}
+                href={`https://wa.me/918448622890?text=Hi%20TripprChale!%20I%20filled%20the%20enquiry%20form.%20My%20name%20is%20${encodeURIComponent(form.name)}`}
                 target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-white px-5 py-2.5 rounded-full transition-all hover:scale-105"
                 style={{ background: '#25D366' }}
@@ -218,7 +218,7 @@ export default function ContactPopup() {
               </div>
 
               <div className="flex gap-2">
-                <a href="https://wa.me/919717096999" target="_blank" rel="noopener noreferrer"
+                <a href="https://wa.me/918448622890" target="_blank" rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold py-2.5 rounded-xl transition-all hover:scale-105"
                   style={{ background: 'rgba(37,211,102,0.1)', color: '#16a34a', border: '1px solid rgba(37,211,102,0.2)' }}>
                   💬 WhatsApp

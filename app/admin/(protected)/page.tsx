@@ -148,7 +148,7 @@ export default async function AdminDashboard({ searchParams }: PageProps) {
           <div className="space-y-2.5">
             {[
               { icon: <Phone size={13} />, label: 'Sales / Bookings', value: '+91 84486 22890', href: 'tel:+918448622890', color: 'var(--primary)' },
-              { icon: <MessageCircle size={13} />, label: 'WhatsApp Enquiries', value: '+91 971 709 6999', href: 'https://wa.me/919717096999', color: '#25D366' },
+              { icon: <MessageCircle size={13} />, label: 'WhatsApp Enquiries', value: '+91 84486 22890', href: 'https://wa.me/918448622890', color: '#25D366' },
               { icon: <Mail size={13} />, label: 'Email', value: 'hello@tripprchale.com', href: 'mailto:hello@tripprchale.com', color: 'var(--sky)' },
               { icon: <span className="text-xs">📸</span>, label: 'Instagram', value: '@tripprchale', href: 'https://www.instagram.com/tripprchale?igsh=OWV1czhwYThvZW11&utm_source=qr', color: '#E1306C' },
             ].map(({ icon, label, value, href, color }) => (
