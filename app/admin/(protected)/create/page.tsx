@@ -25,6 +25,7 @@ const EMPTY_FORM = {
   excludes:          ['', ''],
   batches:             [{ departureDate: '', seatsLeft: 20, status: 'Available' }] as Batch[],
   quadPrice:    '', triplePrice: '', doublePrice: '', advanceAmount: '2000',
+  pickupDrop: 'Delhi to Delhi',
   itinerary:           [{ title: '', description: '' }] as ItineraryDay[],
   cancellationPolicy:  '',
   tripTerms:           '',
@@ -151,6 +152,7 @@ export default function AdminCreatePage() {
       triple_price:  form.triplePrice ? Number(form.triplePrice) : null,
       double_price:  form.doublePrice ? Number(form.doublePrice) : null,
       advance_amount: Number(form.advanceAmount) || 2000,
+      pickup_drop:    form.pickupDrop || 'Delhi to Delhi',
       itinerary: JSON.stringify(
         form.itinerary
           .filter(d => d.title || d.description)
@@ -209,6 +211,7 @@ export default function AdminCreatePage() {
             </select>
           </Row>
           <Row label="Duration *"><Input required value={form.duration} onChange={v => set('duration', v)} placeholder="5 Days / 4 Nights" /></Row>
+          <Row label="Pickup & Drop"><Input value={form.pickupDrop} onChange={v => set('pickupDrop', v)} placeholder="e.g. Delhi to Delhi" /></Row>
           <Row label="Tagline"><Input value={form.tagline} onChange={v => set('tagline', v)} placeholder="e.g. Trek through pine forests & hot springs" /></Row>
           <Row label="Emoji"><Input value={form.emoji} onChange={v => set('emoji', v)} placeholder="✈️" /></Row>
           <Row label="Trip Image">

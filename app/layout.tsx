@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "TripprChale – Where Memories Are Made!!",
+  metadataBase: new URL('https://tripprchale.com'),
+  title: "TripprChale – Where Memories Are Made!",
   description: "Youth group tours to the Himalayas, deserts, and beaches. Book affordable adventure trips across India and the world.",
   icons: {
     icon: [
@@ -14,10 +15,11 @@ export const metadata: Metadata = {
     shortcut: '/icon.png',
   },
   openGraph: {
-    title: 'TripprChale – Where Memories Are Made!!',
+    title: 'TripprChale – Where Memories Are Made!',
     description: 'Youth group tours to the Himalayas, deserts, and beaches. Book affordable adventure trips across India and the world.',
     images: [{ url: '/icon.png' }],
     siteName: 'TripprChale',
+    url: 'https://tripprchale.com',
   },
 };
 

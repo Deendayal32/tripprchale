@@ -85,7 +85,7 @@ export default async function HomePage({ searchParams }: PageProps) {
           className="relative z-10 font-semibold mb-3"
           style={{ fontSize: 'clamp(1rem,2.5vw,1.4rem)', color: 'var(--navy)' }}
         >
-          Where Memories Are Made!!
+          Where Memories Are Made!
         </p>
         <p className="relative z-10 max-w-lg mb-7 sm:mb-9 text-sm leading-relaxed px-2" style={{ color: 'var(--text-muted)' }}>
           Join India's most energetic youth travel community — Himalayan treks,
@@ -102,9 +102,9 @@ export default async function HomePage({ searchParams }: PageProps) {
         {/* Stats */}
         <div className="relative z-10 grid grid-cols-4 gap-4 sm:gap-10 mt-10 sm:mt-12 w-full max-w-sm sm:max-w-none sm:w-auto">
           {[
-            { value: `${trips.length || '10'}+`, label: 'Active Trips' },
-            { value: '500+',  label: 'Travelers' },
-            { value: '15+',   label: 'Destinations' },
+            { value: '35+',   label: 'Trips' },
+            { value: '5000+', label: 'Travelers' },
+            { value: '45+',   label: 'Destinations' },
             { value: '4.9★',  label: 'Rating' },
           ].map(({ value, label }) => (
             <div key={label} className="text-center">
@@ -167,8 +167,11 @@ export default async function HomePage({ searchParams }: PageProps) {
               style={{ background: 'rgba(255,140,66,0.1)', border: '1px solid rgba(255,140,66,0.2)' }}>
               💎 The <BrandName /> Advantage
             </div>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl" style={{ color: 'var(--navy)' }}>
-              Why <BrandName />?
+            <h2 className="font-display font-bold text-3xl sm:text-4xl">
+              <span style={{ color: '#1B2A4A' }}>Why </span>
+              <span style={{ color: '#FF914D' }}>Trip</span>
+              <span style={{ color: '#1B2A4A' }}>pr</span>
+              <span style={{ color: '#29ABE2' }}>chale?</span>
             </h2>
           </div>
 
@@ -227,18 +230,25 @@ export default async function HomePage({ searchParams }: PageProps) {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-3"
               style={{ background: 'rgba(255,213,92,0.2)', color: '#B8860B', border: '1px solid rgba(255,213,92,0.4)' }}>
-              ⭐ Real Travelers, Real Stories
+              ⭐ Traveler Reviews
             </div>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl" style={{ color: 'var(--navy)' }}>
+            <h2 className="font-display font-bold text-3xl sm:text-4xl mb-3" style={{ color: 'var(--navy)' }}>
               What Our Travelers Say
             </h2>
+            <div className="flex items-center justify-center gap-2">
+              <span className="font-black text-2xl" style={{ color: 'var(--navy)' }}>4.9</span>
+              <div className="flex gap-0.5">
+                {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="var(--yellow)" stroke="none" />)}
+              </div>
+              <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Based on 2700+ reviews</span>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { name: 'Priya S.', trip: 'Kasol Manali Adventure',   avatar: '👩', text: <>Absolutely loved it! The trip captain was fantastic and the group was super fun. <BrandName /> made it stress-free!</> },
-              { name: 'Rahul M.', trip: 'Goa Beach Backpacking',    avatar: '👨', text: <>Best 5 days of my life. Met amazing people, the itinerary was perfectly balanced between fun and exploration.</> },
-              { name: 'Sneha K.', trip: 'Rajasthan Royal Escapade', avatar: '👩‍🦱', text: <>The desert safari was mind-blowing. <BrandName /> never disappoints — every detail was thought through!</> },
+              { name: 'Priya S.',  trip: 'Kasol Manali Adventure',   avatar: '👩',   text: 'Absolutely loved this trip! The captain was fantastic and so organised.' },
+              { name: 'Rahul M.', trip: 'Goa Beach Backpacking',     avatar: '👨',   text: 'Best experience ever. Will definitely book again with TripprChale!' },
+              { name: 'Sneha K.', trip: 'Rajasthan Royal Escapade',  avatar: '👩‍🦱', text: 'The desert safari was mind-blowing. TripprChale never disappoints — every detail was thought through!' },
             ].map(({ name, trip, avatar, text }) => (
               <div key={name} className="rounded-2xl p-6 bg-white"
                 style={{ border: '1px solid var(--border-card)', boxShadow: 'var(--shadow-sm)' }}>

@@ -26,6 +26,7 @@ const EMPTY_FORM = {
   excludes:           ['', ''],
   batches:            [{ departureDate: '', seatsLeft: 20, status: 'Available' }] as Batch[],
   quadPrice:    '', triplePrice: '', doublePrice: '', advanceAmount: '2000',
+  pickupDrop: 'Delhi to Delhi',
   itinerary:          [{ title: '', description: '' }] as ItineraryDay[],
   cancellationPolicy: '',
   tripTerms:          '',
@@ -89,6 +90,7 @@ export default function AdminEditPage() {
           triplePrice:        t.triple_price != null ? String(t.triple_price) : '',
           doublePrice:        t.double_price != null ? String(t.double_price) : '',
           advanceAmount:      t.advance_amount != null ? String(t.advance_amount) : '2000',
+          pickupDrop:         t.pickup_drop ?? 'Delhi to Delhi',
           itinerary:          (t.itinerary?.length   ? t.itinerary.map((d: { title?: string; description?: string }) => ({ title: d.title ?? '', description: d.description ?? '' })) : [{ title: '', description: '' }]),
           cancellationPolicy: t.cancellation_policy ?? '',
           tripTerms:          t.trip_terms          ?? '',
@@ -199,6 +201,7 @@ export default function AdminEditPage() {
       triple_price:  form.triplePrice ? Number(form.triplePrice) : null,
       double_price:  form.doublePrice ? Number(form.doublePrice) : null,
       advance_amount: Number(form.advanceAmount) || 2000,
+      pickup_drop:    form.pickupDrop || 'Delhi to Delhi',
       itinerary: JSON.stringify(
         form.itinerary
           .filter(d => d.title || d.description)
@@ -277,6 +280,7 @@ export default function AdminEditPage() {
             </select>
           </Row>
           <Row label="Duration *"><Input required value={form.duration} onChange={v => set('duration', v)} placeholder="5 Days / 4 Nights" /></Row>
+          <Row label="Pickup & Drop"><Input value={form.pickupDrop} onChange={v => set('pickupDrop', v)} placeholder="e.g. Delhi to Delhi" /></Row>
           <Row label="Tagline"><Input value={form.tagline} onChange={v => set('tagline', v)} placeholder="e.g. Trek through pine forests & hot springs" /></Row>
           <Row label="Emoji"><Input value={form.emoji} onChange={v => set('emoji', v)} placeholder="✈️" /></Row>
           <Row label="Trip Image">

@@ -40,6 +40,7 @@ export type Trip = {
   triplePrice?: number
   doublePrice?: number
   advanceAmount: number
+  pickupDrop: string
   itinerary: ItineraryDay[]
   cancellationPolicy: string
   tripTerms: string
@@ -74,6 +75,7 @@ function mapRow(t: RowDataPacket, batches: RowDataPacket[]): Trip {
     triplePrice:   t.triple_price ?? undefined,
     doublePrice:   t.double_price ?? undefined,
     advanceAmount: t.advance_amount ?? 2000,
+    pickupDrop:    t.pickup_drop ?? 'Delhi to Delhi',
     itinerary:     typeof t.itinerary === 'string' ? JSON.parse(t.itinerary) : (t.itinerary ?? []),
     cancellationPolicy: t.cancellation_policy ?? '',
     tripTerms:          t.trip_terms ?? '',

@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react'
-import BrandName from '@/components/BrandName'
 
 const IconInstagram = () => (
   <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -18,6 +17,13 @@ const IconYoutube = () => (
   <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
     <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>
+  </svg>
+)
+const IconLinkedIn = () => (
+  <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+    <rect x="2" y="9" width="4" height="12"/>
+    <circle cx="4" cy="4" r="2"/>
   </svg>
 )
 
@@ -45,7 +51,7 @@ const quickLinks = [
   { label: 'Weekend Getaways',            href: '/?category=weekend#trips'      },
   { label: 'Backpacking Tours',           href: '/?category=backpacking#trips'  },
   { label: 'Custom Tours',               href: '/#contact'                     },
-  { label: 'Cancellation & Refund Policy', href: '/terms'                      },
+  { label: 'Cancellation & Refund Policy', href: '/cancellation'               },
   { label: 'Privacy Policy & Terms',     href: '/privacy'                      },
 ]
 
@@ -78,7 +84,7 @@ export default function Footer() {
                 <span style={{ color: '#29ABE2' }}>CHALE</span>
               </div>
               <div className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                Where Memories Are Made!!
+                Where Memories Are Made!
               </div>
             </div>
           </div>
@@ -92,6 +98,7 @@ export default function Footer() {
               { href: 'https://www.instagram.com/tripprchale?igsh=OWV1czhwYThvZW11&utm_source=qr', icon: <IconInstagram />, label: 'Instagram' },
               { href: 'https://www.facebook.com/share/18tcgWa4ng/?mibextid=wwXIfr',              icon: <IconFacebook />,  label: 'Facebook'  },
               { href: 'https://www.youtube.com/@Tripprchale',                                    icon: <IconYoutube />,   label: 'YouTube'   },
+              { href: 'https://www.linkedin.com/company/tripprchale/',                           icon: <IconLinkedIn />,  label: 'LinkedIn'  },
             ].map(({ href, icon, label }) => (
               <a
                 key={label}
@@ -105,6 +112,29 @@ export default function Footer() {
                 {icon}
               </a>
             ))}
+          </div>
+
+          {/* Company links */}
+          <div className="mt-5">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-3"
+              style={{ color: 'rgba(255,255,255,0.4)' }}>Company</p>
+            <ul className="space-y-2">
+              {[
+                { label: 'About Us',       href: '/about-us'  },
+                { label: 'Contact Us',     href: '/#contact'  },
+                { label: 'Career With Us', href: '/careers'   },
+                { label: 'Our Blogs',      href: '/blogs'     },
+              ].map(({ label, href }) => (
+                <li key={label}>
+                  <Link href={href}
+                    className="text-sm flex items-center gap-2 transition-all hover:text-white hover:translate-x-1"
+                    style={{ color: 'rgba(255,255,255,0.65)' }}>
+                    <span style={{ color: '#FF914D', fontSize: '10px' }}>▶</span>
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
@@ -221,7 +251,9 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="text-xs text-center sm:text-left" style={{ color: 'rgba(255,255,255,0.38)' }}>
-            © {new Date().getFullYear()} <BrandName dark />.com &nbsp;·&nbsp; All rights reserved
+            © {new Date().getFullYear()}{' '}
+            <span style={{ color: 'rgba(255,255,255,0.55)' }}>TripprChale.com</span>
+            &nbsp;·&nbsp; All rights reserved
           </p>
 
           {/* Payment trust badges */}

@@ -41,8 +41,10 @@ export default function TripImageCarousel({ images, alt, emoji }: Props) {
       <img
         src={images[current]}
         alt={`${alt} — photo ${current + 1}`}
-        className="w-full h-full object-cover transition-opacity duration-300"
+        className="w-full h-full object-contain transition-opacity duration-300"
+        style={{ background: '#1a2640' }}
         key={current}
+        onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
       />
 
       {images.length > 1 && (

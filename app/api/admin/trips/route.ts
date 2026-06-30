@@ -73,6 +73,7 @@ export async function POST(req: NextRequest) {
       triple_price:        triple_price        ?? null,
       double_price:        double_price        ?? null,
       advance_amount:      advance_amount      ?? 2000,
+      pickup_drop:         body.pickup_drop    ?? 'Delhi to Delhi',
       itinerary:           itinerary           ?? '[]',
       cancellation_policy: cancellation_policy ?? '',
       trip_terms:          trip_terms          ?? '',

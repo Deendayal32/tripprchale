@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { CheckCircle, XCircle, ChevronDown, ChevronUp, Star, CalendarDays } from 'lucide-react'
 import { Trip } from '@/lib/queries'
-import BrandName from '@/components/BrandName'
 
 type Tab = 'overview' | 'itinerary' | 'inclusions' | 'policies'
 
@@ -102,20 +101,20 @@ export default function TripTabs({ trip, today }: { trip: Trip; today: string })
 
           {/* Reviews */}
           <div className="rounded-2xl p-6" style={CARD}>
-            <h2 className="font-bold text-xl mb-4" style={{ color: 'var(--navy)' }}>⭐ Traveller Reviews</h2>
+            <h2 className="font-bold text-xl mb-4" style={{ color: 'var(--navy)' }}>⭐ Traveler Reviews</h2>
             <div className="flex items-center gap-3 mb-4">
               <div className="font-bold text-4xl" style={{ color: 'var(--primary)' }}>4.9</div>
               <div>
                 <div className="flex gap-0.5 mb-1">
                   {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="var(--yellow)" stroke="none" />)}
                 </div>
-                <div className="text-xs text-gray-400">Based on 120+ reviews</div>
+                <div className="text-xs text-gray-400">Based on 2700+ reviews</div>
               </div>
             </div>
             <div className="space-y-3">
               {[
                 { name: 'Priya S.',  text: 'Absolutely loved this trip! The captain was fantastic and so organised.' },
-                { name: 'Rahul M.', text: <>Best experience ever. Will definitely book again with <BrandName />!</> },
+                { name: 'Rahul M.', text: 'Best experience ever. Will definitely book again with TripprChale!' },
               ].map(({ name, text }) => (
                 <div key={name} className="p-3 rounded-xl" style={{ background: '#fafafa', border: '1px solid #f0f0f0' }}>
                   <div className="flex gap-0.5 mb-1">
@@ -238,7 +237,7 @@ export default function TripTabs({ trip, today }: { trip: Trip; today: string })
               <div className="space-y-2 text-sm text-gray-600">
                 <p>• All travelers must carry a valid government-issued photo ID.</p>
                 <p>• The trip captain&apos;s decision is final in all matters on the trip.</p>
-                <p>• <BrandName /> reserves the right to modify itineraries due to weather or safety concerns.</p>
+                <p>• TripprChale reserves the right to modify itineraries due to weather or safety concerns.</p>
                 <p>• Travelers with medical conditions must inform us before booking.</p>
                 <p>• Behaviour endangering fellow travelers may result in removal without refund.</p>
               </div>

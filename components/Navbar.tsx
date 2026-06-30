@@ -29,6 +29,7 @@ const NAV_LINKS: NavLink[] = [
   },
   { label: 'Custom Tours', href: '/#contact' },
   { label: 'Contact Us',   href: '/#contact' },
+  { label: 'Payments',     href: '/payments' },
 ]
 
 const CAT_META: Record<string, { label: string; emoji: string; color: string; bg: string }> = {
@@ -144,7 +145,7 @@ export default function Navbar() {
                 <span style={{ color: 'var(--sky)' }}>CHALE</span>
               </div>
               <div className="text-xs font-medium hidden sm:block" style={{ color: 'var(--text-light)', lineHeight: 1 }}>
-                Where Memories Are Made!!
+                Where Memories Are Made!
               </div>
             </div>
           </Link>
@@ -196,12 +197,6 @@ export default function Navbar() {
               <Search size={17} style={{ color: 'var(--navy)' }} />
               <span className="hidden sm:inline text-xs">Search trips…</span>
             </button>
-
-            <Link href="/admin"
-              className="hidden lg:flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all hover:bg-orange-50"
-              style={{ color: 'var(--text-muted)' }}>
-              🛠 Admin
-            </Link>
 
             <a href="tel:+918448622890"
               className="hidden lg:flex items-center gap-2 text-sm font-semibold text-white rounded-full px-4 py-2 transition-all hover:scale-105"
@@ -374,14 +369,6 @@ export default function Navbar() {
 
             {/* ── Extra links ── */}
             <ul className="px-3 py-2">
-              <li>
-                <Link href="/admin"
-                  className="flex items-center gap-2.5 px-4 py-3 text-sm font-medium rounded-xl transition-all hover:bg-orange-50"
-                  style={{ color: 'var(--text-light)' }}
-                  onClick={closeAll}>
-                  🛠 Admin Panel
-                </Link>
-              </li>
               <li>
                 <a href="https://wa.me/918448622890"
                   target="_blank" rel="noopener noreferrer"

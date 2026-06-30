@@ -9,7 +9,7 @@ import Footer from '@/components/Footer'
 import TripBookingCard from '@/components/TripBookingCard'
 import TripTabs from '@/components/TripTabs'
 import ContactPopup from '@/components/ContactPopup'
-import { MapPin, Clock, Users, ChevronLeft } from 'lucide-react'
+import { MapPin, Clock, Users, ChevronLeft, Bus } from 'lucide-react'
 import TripImageCarousel from '@/components/TripImageCarousel'
 
 type Props = {
@@ -104,14 +104,14 @@ export default async function TripDetailPage({ params }: Props) {
           {/* Quick stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
             {[
-              { icon: '📅', label: 'Duration',    value: trip.duration },
-              { icon: '👥', label: 'Group Size',  value: `Max ${trip.totalSeats}` },
-              { icon: '🚐', label: 'Pick & Drop',  value: 'Delhi - Delhi' },
-              { icon: '👥', label: 'Age Group',   value: '18 - 35 Years' },
+              { icon: <span className="text-2xl">📅</span>, label: 'Duration',      value: trip.duration },
+              { icon: <span className="text-2xl">👥</span>, label: 'Group Size',    value: `Max ${trip.totalSeats}` },
+              { icon: <Bus size={28} style={{ color: '#FF914D' }} />, label: 'Pickup & Drop', value: trip.pickupDrop || 'Delhi to Delhi' },
+              { icon: <Users size={28} style={{ color: '#1B2A4A' }} />, label: 'Age Group',   value: '18 - 35 Years' },
             ].map(({ icon, label, value }) => (
-              <div key={label} className="rounded-2xl p-4 text-center"
+              <div key={label} className="rounded-2xl p-4 text-center flex flex-col items-center"
                 style={{ background: 'white', border: '1px solid rgba(0,0,0,0.06)' }}>
-                <div className="text-2xl mb-1">{icon}</div>
+                <div className="mb-1">{icon}</div>
                 <div className="text-xs text-gray-400 mb-0.5">{label}</div>
                 <div className="font-semibold text-sm" style={{ color: 'var(--navy)' }}>{value}</div>
               </div>
@@ -127,6 +127,56 @@ export default async function TripDetailPage({ params }: Props) {
           <TripBookingCard trip={trip} />
         </div>
       </div>
+
+      {/* ── Traveler Reviews ── */}
+      <section className="py-14 px-4" style={{ background: '#f8f9fa' }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-3"
+              style={{ background: 'rgba(255,213,92,0.2)', color: '#B8860B', border: '1px solid rgba(255,213,92,0.4)' }}>
+              ⭐ Traveler Reviews
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <span className="font-black text-2xl" style={{ color: '#1B2A4A' }}>4.9</span>
+              <div className="flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="#FFD54F"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                ))}
+              </div>
+              <span className="text-sm" style={{ color: '#6b7280' }}>Based on 2700+ reviews</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto">
+            {[
+              { name: 'Priya S.',  trip: 'Kasol Manali Adventure',  avatar: '👩',  text: 'Absolutely loved this trip! The captain was fantastic and so organised.' },
+              { name: 'Rahul M.', trip: 'Goa Beach Backpacking',    avatar: '👨',  text: 'Best experience ever. Will definitely book again with TripprChale!' },
+            ].map(({ name, trip, avatar, text }) => (
+              <div key={name} className="rounded-2xl p-6 bg-white"
+                style={{ border: '1px solid rgba(0,0,0,0.07)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+                <div className="flex gap-0.5 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} width="13" height="13" viewBox="0 0 24 24" fill="#FFD54F"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  ))}
+                </div>
+                <p className="text-sm leading-relaxed mb-4" style={{ color: '#6b7280' }}>
+                  &ldquo;{text}&rdquo;
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center text-lg"
+                    style={{ background: '#EFF6FF' }}>
+                    {avatar}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-sm" style={{ color: '#1B2A4A' }}>{name}</div>
+                    <div className="text-xs" style={{ color: '#9ca3af' }}>{trip}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Spacer so mobile sticky bar doesn't hide last content */}
       <div className="lg:hidden h-20" />
